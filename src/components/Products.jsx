@@ -50,6 +50,9 @@ export default function Products({ onOpenAddProduct, onEditProduct }) {
     setDeletingId(id);
     try {
       await deleteProduct(id);
+      try {
+        fetch('https://xonbozoruz.vercel.app/api/revalidate', { method: 'POST', mode: 'no-cors' }).catch(() => {});
+      } catch (_) {}
       fetchProductsList();
     } catch (err) {
       alert(err.message || 'O\'chirishda xatolik yuz berdi');

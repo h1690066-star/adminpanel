@@ -553,6 +553,11 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
         await createProduct(data);
       }
 
+      // Vercel saytidagi keshni avtomatik yangilash (On-demand revalidation)
+      try {
+        fetch('https://xonbozoruz.vercel.app/api/revalidate', { method: 'POST', mode: 'no-cors' }).catch(() => {});
+      } catch (_) {}
+
       onRefresh();
       onClose();
     } catch (err) {
