@@ -150,14 +150,14 @@ export default function OrderReceiptModal({ order, isOpen, onClose, onStatusUpda
                   <span>Mijoz Ma'lumotlari</span>
                 </div>
                 <div className="text-xs space-y-1 text-slate-700">
-                  <div className="font-bold text-slate-900 text-sm">{order.user?.name || 'Mijoz aks etmagan'}</div>
+                  <div className="font-bold text-slate-900 text-sm">{order.customer?.name || order.user?.name || 'Mijoz aks etmagan'}</div>
                   <div className="flex items-center gap-1.5 text-slate-500">
                     <Mail className="w-3.5 h-3.5" />
-                    <span>{order.user?.email || 'Email yo\'q'}</span>
+                    <span>{order.customer?.telegram ? `@${order.customer.telegram.replace('@', '')}` : (order.user?.email || 'Telegram/Email yo\'q')}</span>
                   </div>
                   <div className="flex items-center gap-1.5 text-slate-500">
                     <Phone className="w-3.5 h-3.5" />
-                    <span>{order.user?.phone || order.address?.phone || '+998901234567'}</span>
+                    <span>{order.customer?.phone || order.user?.phone || order.address?.phone || '-'}</span>
                   </div>
                 </div>
               </div>

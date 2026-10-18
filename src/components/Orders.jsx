@@ -56,8 +56,9 @@ export default function Orders({ selectedOrderFromDash, onSelectOrder }) {
     if (!search) return true;
     const s = search.toLowerCase();
     const orderNum = (o.orderNumber || o._id || '').toLowerCase();
-    const custName = (o.user?.name || o.user?.email || '').toLowerCase();
-    return orderNum.includes(s) || custName.includes(s);
+    const custName = (o.customer?.name || o.user?.name || o.address?.title || '').toLowerCase();
+    const custPhone = (o.customer?.phone || o.user?.phone || o.address?.phone || '').toLowerCase();
+    return orderNum.includes(s) || custName.includes(s) || custPhone.includes(s);
   });
 
   return (
@@ -157,8 +158,8 @@ export default function Orders({ selectedOrderFromDash, onSelectOrder }) {
 
                       {/* MIJOZ */}
                       <td className="py-4 px-6">
-                        <div className="font-bold text-slate-900">{item.user?.name || 'Mijoz aks etmagan'}</div>
-                        <div className="text-[11px] text-slate-400">{item.user?.phone || item.user?.email || '+998901234567'}</div>
+                        <div className="font-bold text-slate-900">{item.customer?.name || item.user?.name || item.address?.title || 'Mijoz'}</div>
+                        <div className="text-[11px] text-slate-400">{item.customer?.phone || item.user?.phone || item.address?.phone || '-'}</div>
                       </td>
 
                       {/* MAHSULOTLAR */}
@@ -176,7 +177,7 @@ export default function Orders({ selectedOrderFromDash, onSelectOrder }) {
 
                       {/* CHEK */}
                       <td className="py-4 px-6">
-                        {item.receipt ? (
+                        {(item.receipt || item.receiptData) ? (
                           <button
                             onClick={() => onSelectOrder(item)}
                             className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-[11px] transition-colors cursor-pointer"

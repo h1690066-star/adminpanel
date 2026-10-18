@@ -207,7 +207,7 @@ export default function Dashboard({ setActiveTab, onSelectOrder }) {
   const ordersToDisplay = recentOrders.slice(0, 6).map(o => ({
     _id: o._id,
     orderNumber: o.orderNumber || `XB-${(o._id || '').slice(-5)}`,
-    userName: o.user?.name || o.user?.email || 'Mijoz',
+    userName: o.customer?.name || o.user?.name || o.address?.title || 'Mijoz',
     total: o.total || 0,
     status: o.status || 'new',
     rawOrder: o
