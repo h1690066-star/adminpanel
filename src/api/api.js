@@ -234,6 +234,7 @@ export async function getSiteContent() {
 }
 
 export async function updateSiteContent(data) {
+  // 1. Backend API (MongoDB) ga saqlash
   const res = await fetchWithAuth(`${BASE_URL}/site-content`, {
     method: 'PUT',
     body: JSON.stringify(data)
@@ -243,6 +244,20 @@ export async function updateSiteContent(data) {
   if (!res.ok) {
     throw new Error(resData.message || 'Sayt ma\'lumotlarini saqlashda xatolik');
   }
+
+  // 2. Lokal muhitda Full repo git push ni ishga tushirish (Vercel avto-deploy uchun)
+  if (isDev) {
+    try {
+      await fetch('/api/local-git-push', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: resData.content || data })
+      });
+    } catch (e) {
+      console.warn('Local git push sync info:', e);
+    }
+  }
+
   return resData;
 }
 
