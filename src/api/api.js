@@ -218,3 +218,31 @@ export async function getUsers() {
   }
   return await res.json();
 }
+
+/**
+ * 5. SITE CONTENT / CMS API
+ */
+export async function getSiteContent() {
+  const res = await fetch(`${BASE_URL}/site-content`, {
+    method: 'GET',
+    headers: { 'Accept': 'application/json' }
+  });
+  if (!res.ok) {
+    throw new Error('Sayt ma\'lumotlarini yuklashda xatolik yuz berdi');
+  }
+  return await res.json();
+}
+
+export async function updateSiteContent(data) {
+  const res = await fetchWithAuth(`${BASE_URL}/site-content`, {
+    method: 'PUT',
+    body: JSON.stringify(data)
+  }, true);
+
+  const resData = await res.json();
+  if (!res.ok) {
+    throw new Error(resData.message || 'Sayt ma\'lumotlarini saqlashda xatolik');
+  }
+  return resData;
+}
+

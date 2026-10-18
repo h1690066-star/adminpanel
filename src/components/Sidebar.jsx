@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Smartphone, LayoutDashboard, Package, ShoppingCart, Users, Plus, LogOut } from 'lucide-react';
+import { Smartphone, LayoutDashboard, Package, ShoppingCart, Users, Plus, LogOut, Globe } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab, onOpenAddProduct }) {
   const { logout } = useAuth();
@@ -10,6 +10,7 @@ export default function Sidebar({ activeTab, setActiveTab, onOpenAddProduct }) {
     { id: 'products', label: 'Mahsulotlar', icon: Package },
     { id: 'orders', label: 'Buyurtmalar', icon: ShoppingCart },
     { id: 'customers', label: 'Mijozlar', icon: Users },
+    { id: 'site-editor', label: 'Saytni tahrirlash', icon: Globe },
   ];
 
   return (

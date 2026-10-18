@@ -9,6 +9,7 @@ import ProductModal from './components/ProductModal';
 import Orders from './components/Orders';
 import OrderReceiptModal from './components/OrderReceiptModal';
 import Customers from './components/Customers';
+import SiteEditor from './components/SiteEditor';
 
 function AdminContent() {
   const { isAuthenticated } = useAuth();
@@ -30,7 +31,8 @@ function AdminContent() {
     dashboard: 'Boshqaruv paneli',
     products: 'Mahsulotlar',
     orders: 'Buyurtmalar',
-    customers: 'Mijozlar'
+    customers: 'Mijozlar',
+    'site-editor': 'Saytni tahrirlash (Live CMS)'
   };
 
   const handleOpenAddProduct = () => {
@@ -90,6 +92,10 @@ function AdminContent() {
 
           {activeTab === 'customers' && (
             <Customers />
+          )}
+
+          {activeTab === 'site-editor' && (
+            <SiteEditor />
           )}
         </main>
       </div>
