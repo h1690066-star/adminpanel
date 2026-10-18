@@ -11,7 +11,7 @@ import {
   Image as ImageIcon,
   Phone,
   Clock,
-  MapPin,
+  MapPin, 
   Sparkles,
   RefreshCw,
   ExternalLink,
@@ -26,7 +26,7 @@ import {
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
-import { getSiteContent, updateSiteContent } from '../api/api';
+import { getSiteContent, updateSiteContent, getImageUrl } from '../api/api';
 
 const VERCEL_SITE_URL = "https://xonbozoruz.vercel.app";
 
@@ -118,7 +118,8 @@ export default function SiteEditor() {
     async function loadData() {
       try {
         setLoading(true);
-        const data = await getSiteContent();
+        const resData = await getSiteContent();
+        const data = resData?.content || resData;
         if (isMounted && data) {
           setContent({
             heroSlides: data.heroSlides && data.heroSlides.length > 0 ? data.heroSlides : DEFAULT_DATA.heroSlides,
@@ -904,7 +905,7 @@ export default function SiteEditor() {
                 {/* 2. Hero Carousel Banner Preview */}
                 <div className="relative rounded-xl overflow-hidden bg-slate-900 h-44 border border-slate-800 shadow-inner group">
                   <img
-                    src={currentPreviewSlide.image || '/images/hero/hero-1.png'}
+                    src={getImageUrl(currentPreviewSlide.image) || '/images/hero/hero-1.png'}
                     alt="Banner preview"
                     className="absolute inset-0 w-full h-full object-cover opacity-60"
                     onError={(e) => {

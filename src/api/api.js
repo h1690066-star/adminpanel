@@ -1,15 +1,16 @@
+const envApiUrl = import.meta.env.VITE_API_URL || '';
 const isDev = import.meta.env.DEV;
-export const SERVER_URL = isDev ? '' : 'https://full-nbal.onrender.com';
-export const BASE_URL = isDev ? '/api' : 'https://full-nbal.onrender.com/api';
+export const SERVER_URL = envApiUrl || (isDev ? '' : 'http://127.0.0.1:3211');
+export const BASE_URL = isDev && !envApiUrl ? '/api' : `${SERVER_URL || 'http://127.0.0.1:3211'}/api`;
 
 /**
- * Get image full URL pointing to Render server
+ * Get image full URL pointing to Convex backend or full URL
  */
 export function getImageUrl(path) {
   if (!path) return '';
-  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) return path;
   const clean = path.startsWith('/') ? path : `/${path}`;
-  return isDev ? clean : `https://full-nbal.onrender.com${clean}`;
+  return `${SERVER_URL || 'http://127.0.0.1:3211'}${clean}`;
 }
 
 /**

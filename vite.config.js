@@ -54,17 +54,17 @@ export default defineConfig({
   server: {
     proxy: {
       '/api/site-content': {
-        target: 'https://full-nbal.onrender.com',
+        target: 'http://127.0.0.1:3211',
         changeOrigin: true,
         secure: false,
       },
       '/api': {
-        target: 'https://full-nbal.onrender.com',
+        target: 'http://127.0.0.1:3211',
         changeOrigin: true,
         secure: false,
       },
       '/uploads': {
-        target: 'https://full-nbal.onrender.com',
+        target: 'http://127.0.0.1:3211',
         changeOrigin: true,
         secure: false,
       }
