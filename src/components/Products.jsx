@@ -124,7 +124,7 @@ export default function Products({ onOpenAddProduct, onEditProduct }) {
               <option value="Barchasi">Barchasi</option>
               <option value="Phones">Phones</option>
               <option value="Used Phones">Used Phones</option>
-              <option value="Elektronika">Elektronika</option>
+              <option value="Elektronika">Kompyuter va Elektronika</option>
               <option value="Aksessuarlar">Aksessuarlar</option>
               <option value="Home appliances">Home appliances</option>
             </select>

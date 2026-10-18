@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   X, Upload, Image as ImageIcon, Check, Cpu, HardDrive, 
   Smartphone, Monitor, Globe, Palette, Sliders, Flame, Zap, 
-  ShieldCheck, Plus, Trash2, Box, Layers
+  ShieldCheck, Plus, Trash2, Box, Layers, Laptop, Tv, Disc,
+  Activity, Wind
 } from 'lucide-react';
 import { createProduct, updateProduct, getImageUrl } from '../api/api';
 
@@ -29,9 +30,6 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
     batteryHealth: '95%',
     deviceCondition: 'Ideal (A+)',
     boxIncluded: 'Karobka va hujjatlar bor',
-    // Electronics specs
-    electronicsType: 'Noutbuk',
-    electronicsBattery: '18 soatgacha avtonomlik',
   });
 
   // Home appliances specific state
@@ -54,6 +52,57 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
     material: 'Silikon'
   });
 
+  // Computer and Electronics specific state
+  const [pcData, setPcData] = useState({
+    subType: 'Videokarta (GPU)', // Sub-type: Videokarta, Desktop PC, Noutbuk, Monitor, CPU, Motherboard, etc.
+    customSubType: '',
+    // Videokarta (GPU)
+    gpuModel: 'GeForce RTX 4070 Super',
+    vram: '12 GB GDDR6X',
+    busWidth: '192-bit',
+    recommendedPsu: '650 W',
+    ports: '3x DisplayPort 1.4a, 1x HDMI 2.1',
+    cooling: '3x Kuler (Triple Fan)',
+    // Desktop PC (Tizim bloki)
+    cpu: 'Intel Core i7-14700K',
+    gpu: 'NVIDIA GeForce RTX 4070 Super 12GB',
+    ram: '32 GB DDR5',
+    storageDrive: '1 TB M.2 NVMe SSD',
+    motherboard: 'B760 GAMING PLUS',
+    psu: '750W 80 Plus Gold',
+    caseModel: 'Gaming ARGB Glass Case',
+    os: 'Windows 11 Pro',
+    // Noutbuk (Laptop) & Monitor
+    screenSize: '15.6 dyuym',
+    screenDetails: 'IPS 144Hz Full HD',
+    resolution: '2K QHD (2560x1440)',
+    refreshRate: '165 Hz',
+    matrixType: 'Fast IPS',
+    battery: '8-10 soat avtonomlik',
+    // CPU
+    socket: 'LGA1700 / AM5',
+    cores: '16 yadro, 24 oqim',
+    frequency: '5.4 GHz Turbo',
+    tdp: '125 W',
+    // Motherboard
+    chipset: 'AMD B650 / Intel B760',
+    formFactor: 'ATX',
+    ramSlots: '4x DDR5',
+    // RAM component
+    ramTypeFreq: 'DDR5 6000MHz CL30',
+    // SSD / HDD component
+    storageCapacity: '1 TB',
+    storageType: 'M.2 NVMe PCIe 4.0',
+    speed: '7000 MB/s o\'qish',
+    // PSU component
+    power: '750 W',
+    certification: '80 Plus Gold',
+    modularity: 'To\'liq modulli (Full Modular)',
+    // General
+    generalSpecs: '',
+    warranty: '1 yil rasmiy kafolat'
+  });
+
   // Dynamic custom specs (Key-value pairs for any category)
   const [customSpecs, setCustomSpecs] = useState([]);
   const [newSpecLabel, setNewSpecLabel] = useState('');
@@ -69,8 +118,8 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
   const [error, setError] = useState(null);
 
   // Available options helpers
-  const storageOptions = ['64GB', '128GB', '256GB', '512GB', '1TB', '2TB'];
-  const ramOptions = ['4 GB', '6 GB', '8 GB', '12 GB', '16 GB', '18 GB', '24 GB', '32 GB', '64 GB'];
+  const storageOptions = ['64GB', '128GB', '256GB', '512GB', '1TB', '2TB', '4TB'];
+  const ramOptions = ['4 GB', '6 GB', '8 GB', '12 GB', '16 GB', '18 GB', '24 GB', '32 GB', '64 GB', '128 GB'];
   const simOptions = [
     'Dual SIM (nano-SIM + eSIM)',
     '2x Physical SIM (Dual nano-SIM)',
@@ -130,6 +179,23 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
     'Boshqa'
   ];
 
+  // Computer and Electronics Sub-types
+  const pcSubTypeOptions = [
+    'Videokarta (GPU)',
+    'Kompyuter (Desktop PC / Tizim bloki)',
+    'Noutbuk (Laptop)',
+    'Monitor',
+    'Protsessor (CPU)',
+    'Ona plata (Motherboard)',
+    'Operativ xotira (RAM)',
+    'Doimiy xotira (SSD / HDD)',
+    'Blok pitaniya (PSU)',
+    'Sovutish tizimi (Kuler / Vodyanka)',
+    'Kompyuter korpusi (Case)',
+    'Periferiya (Klaviatura / Sichqoncha / Naushnik)',
+    'Boshqa jihoz / Elektronika'
+  ];
+
   // Brand options by category
   const getBrandOptions = (cat) => {
     switch (cat) {
@@ -138,7 +204,12 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
       case 'Aksessuarlar':
         return ['Apple', 'Samsung', 'Anker', 'Baseus', 'Hoco', 'Borofone', 'Remax', 'Xiaomi', 'Joyroom', 'Boshqa'];
       case 'Elektronika':
-        return ['Apple', 'Samsung', 'Xiaomi', 'Sony', 'Lenovo', 'Asus', 'HP', 'Dell', 'Boshqa'];
+        return [
+          'ASUS', 'MSI', 'Gigabyte', 'NVIDIA', 'Intel', 'AMD', 'Palit', 'Zotac', 
+          'Colorful', 'Sapphire', 'Lenovo', 'HP', 'Dell', 'Acer', 'Apple', 
+          'Samsung', 'DeepCool', 'Kingston', 'Corsair', 'Logitech', 'Razer', 
+          'HyperX', 'Redragon', 'Bloody', 'Boshqa'
+        ];
       case 'Phones':
       case 'Used Phones':
       default:
@@ -153,6 +224,9 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
     }
     if (cat === 'Aksessuarlar') {
       return ['Qora', 'Oq', 'Shaffof', 'Ko\'k', 'Pushti', 'Yashil', 'Binafsha', 'Titan'];
+    }
+    if (cat === 'Elektronika') {
+      return ['Qora', 'Oq', 'Kulrang', 'Kumushrang', 'RGB Yoritgichli', 'Qizil', 'Ko\'k'];
     }
     return ['Qora', 'Oq', 'Tabiiy Titan', 'Ko\'k', 'Yashil', 'Oltin', 'Pushti', 'Kulrang', 'Sariq'];
   };
@@ -183,8 +257,6 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
         batteryHealth: editingProduct.battery ? `${editingProduct.battery}%` : '95%',
         deviceCondition: editingProduct.grade || 'Ideal (A+)',
         boxIncluded: 'Karobka va hujjatlar bor',
-        electronicsType: 'Noutbuk',
-        electronicsBattery: '18 soatgacha avtonomlik'
       });
       
       const imgs = Array.isArray(editingProduct.images)
@@ -204,9 +276,10 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
         setSelectedColors(getPresetColors(cat).slice(0, 3));
       }
 
-      // Parse existing specs if Home appliances
+      // Parse existing specs if Home appliances or Elektronika
+      const rawLines = (editingProduct.longDescription || editingProduct.description || '').split('\n').map(l => l.trim()).filter(Boolean);
+
       if (cat === 'Home appliances') {
-        const rawLines = (editingProduct.longDescription || editingProduct.description || '').split('\n').map(l => l.trim()).filter(Boolean);
         const parsedApp = {
           type: 'Gaz plita',
           customType: '',
@@ -247,6 +320,43 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
         });
         setApplianceData(parsedApp);
         setCustomSpecs(parsedCustom);
+      } else if (cat === 'Elektronika') {
+        const parsedPc = { ...pcData };
+        const parsedCustom = [];
+
+        rawLines.forEach(line => {
+          const colonIdx = line.indexOf(':');
+          if (colonIdx === -1) return;
+          const k = line.substring(0, colonIdx).trim().toLowerCase();
+          const v = line.substring(colonIdx + 1).trim();
+
+          if (k.includes('qurilma turi')) {
+            if (pcSubTypeOptions.includes(v)) parsedPc.subType = v;
+            else { parsedPc.subType = 'Boshqa jihoz / Elektronika'; parsedPc.customSubType = v; }
+          } else if (k.includes('grafik protsessor') || k.includes('videokarta')) {
+            parsedPc.gpuModel = v;
+            parsedPc.gpu = v;
+          } else if (k.includes('video xotira') || k.includes('vram')) {
+            parsedPc.vram = v;
+          } else if (k.includes('protsessor')) {
+            parsedPc.cpu = v;
+          } else if (k.includes('operativ xotira') || k === 'ram') {
+            parsedPc.ram = v;
+          } else if (k.includes('shina')) {
+            parsedPc.busWidth = v;
+          } else if (k.includes('blok pitaniya') || k.includes('psu')) {
+            parsedPc.recommendedPsu = v;
+            parsedPc.psu = v;
+          } else if (k.includes('ekran dyuymi') || k === 'ekran') {
+            parsedPc.screenSize = v;
+          } else if (k.includes('kafolat')) {
+            parsedPc.warranty = v;
+          } else if (!k.includes('rang')) {
+            parsedCustom.push({ label: line.substring(0, colonIdx).trim(), value: v });
+          }
+        });
+        setPcData(parsedPc);
+        setCustomSpecs(parsedCustom);
       } else {
         setCustomSpecs([]);
       }
@@ -272,8 +382,6 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
         batteryHealth: '95%',
         deviceCondition: 'Ideal (A+)',
         boxIncluded: 'Karobka va hujjatlar bor',
-        electronicsType: 'Noutbuk',
-        electronicsBattery: '18 soatgacha avtonomlik'
       });
       setApplianceData({
         type: 'Gaz plita',
@@ -290,6 +398,46 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
         compatibility: 'iPhone 16 / 15 seriyasi',
         connectionType: 'Type-C',
         material: 'Silikon'
+      });
+      setPcData({
+        subType: 'Videokarta (GPU)',
+        customSubType: '',
+        gpuModel: 'GeForce RTX 4070 Super',
+        vram: '12 GB GDDR6X',
+        busWidth: '192-bit',
+        recommendedPsu: '650 W',
+        ports: '3x DisplayPort 1.4a, 1x HDMI 2.1',
+        cooling: '3x Kuler (Triple Fan)',
+        cpu: 'Intel Core i7-14700K',
+        gpu: 'NVIDIA GeForce RTX 4070 Super 12GB',
+        ram: '32 GB DDR5',
+        storageDrive: '1 TB M.2 NVMe SSD',
+        motherboard: 'B760 GAMING PLUS',
+        psu: '750W 80 Plus Gold',
+        caseModel: 'Gaming ARGB Glass Case',
+        os: 'Windows 11 Pro',
+        screenSize: '15.6 dyuym',
+        screenDetails: 'IPS 144Hz Full HD',
+        resolution: '2K QHD (2560x1440)',
+        refreshRate: '165 Hz',
+        matrixType: 'Fast IPS',
+        battery: '8-10 soat avtonomlik',
+        socket: 'LGA1700 / AM5',
+        cores: '16 yadro, 24 oqim',
+        frequency: '5.4 GHz Turbo',
+        tdp: '125 W',
+        chipset: 'AMD B650 / Intel B760',
+        formFactor: 'ATX',
+        ramSlots: '4x DDR5',
+        ramTypeFreq: 'DDR5 6000MHz CL30',
+        storageCapacity: '1 TB',
+        storageType: 'M.2 NVMe PCIe 4.0',
+        speed: '7000 MB/s o\'qish',
+        power: '750 W',
+        certification: '80 Plus Gold',
+        modularity: 'To\'liq modulli (Full Modular)',
+        generalSpecs: '',
+        warranty: '1 yil rasmiy kafolat'
       });
       setCustomSpecs([]);
       setExistingImages([]);
@@ -338,6 +486,9 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
     } else if (newCat === 'Aksessuarlar') {
       setSelectedStorage([]);
       setSelectedColors(['Qora', 'Oq', 'Shaffof']);
+    } else if (newCat === 'Elektronika') {
+      setSelectedStorage([]);
+      setSelectedColors(['Qora', 'Oq', 'Kulrang']);
     } else if (newCat === 'Phones' || newCat === 'Used Phones') {
       if (selectedStorage.length === 0) setSelectedStorage(['128GB', '256GB']);
       setSelectedColors(['Qora', 'Oq', 'Tabiiy Titan']);
@@ -461,6 +612,112 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
 
         specSummary = specs.join('\n');
         data.append('storage', JSON.stringify([]));
+      } else if (formData.category === 'Elektronika') {
+        const specs = [];
+        const compType = (pcData.subType === 'Boshqa jihoz / Elektronika' && pcData.customSubType?.trim())
+          ? pcData.customSubType.trim()
+          : pcData.subType;
+
+        if (compType) specs.push(`Qurilma turi: ${compType}`);
+
+        // 1. Videokarta (GPU)
+        if (pcData.subType === 'Videokarta (GPU)') {
+          if (pcData.gpuModel?.trim()) specs.push(`Grafik protsessor: ${pcData.gpuModel.trim()}`);
+          if (pcData.vram?.trim()) specs.push(`Video xotira (VRAM): ${pcData.vram.trim()}`);
+          if (pcData.busWidth?.trim()) specs.push(`Shina kengligi: ${pcData.busWidth.trim()}`);
+          if (pcData.recommendedPsu?.trim()) specs.push(`Tavsiya etilgan blok pitaniya: ${pcData.recommendedPsu.trim()}`);
+          if (pcData.ports?.trim()) specs.push(`Interfeys va portlar: ${pcData.ports.trim()}`);
+          if (pcData.cooling?.trim()) specs.push(`Sovutish tizimi: ${pcData.cooling.trim()}`);
+          if (pcData.warranty?.trim()) specs.push(`Kafolat: ${pcData.warranty.trim()}`);
+        }
+        // 2. Desktop PC (Tizim bloki)
+        else if (pcData.subType === 'Kompyuter (Desktop PC / Tizim bloki)') {
+          if (pcData.cpu?.trim()) specs.push(`Protsessor (CPU): ${pcData.cpu.trim()}`);
+          if (pcData.gpu?.trim()) specs.push(`Videokarta (GPU): ${pcData.gpu.trim()}`);
+          if (pcData.ram?.trim()) specs.push(`Operativ xotira (RAM): ${pcData.ram.trim()}`);
+          if (pcData.storageDrive?.trim()) specs.push(`Asosiy xotira (SSD): ${pcData.storageDrive.trim()}`);
+          if (pcData.motherboard?.trim()) specs.push(`Ona plata: ${pcData.motherboard.trim()}`);
+          if (pcData.psu?.trim()) specs.push(`Blok pitaniya (PSU): ${pcData.psu.trim()}`);
+          if (pcData.cooling?.trim()) specs.push(`Sovutish tizimi: ${pcData.cooling.trim()}`);
+          if (pcData.caseModel?.trim()) specs.push(`Korpus: ${pcData.caseModel.trim()}`);
+          if (pcData.os?.trim()) specs.push(`Operatsion tizim: ${pcData.os.trim()}`);
+          if (pcData.warranty?.trim()) specs.push(`Kafolat: ${pcData.warranty.trim()}`);
+        }
+        // 3. Noutbuk (Laptop)
+        else if (pcData.subType === 'Noutbuk (Laptop)') {
+          if (pcData.cpu?.trim()) specs.push(`Protsessor (CPU): ${pcData.cpu.trim()}`);
+          if (pcData.gpu?.trim()) specs.push(`Videokarta: ${pcData.gpu.trim()}`);
+          if (pcData.ram?.trim()) specs.push(`Operativ xotira (RAM): ${pcData.ram.trim()}`);
+          if (pcData.storageDrive?.trim()) specs.push(`Doimiy xotira (SSD): ${pcData.storageDrive.trim()}`);
+          if (pcData.screenSize?.trim()) specs.push(`Ekran: ${pcData.screenSize.trim()}`);
+          if (pcData.screenDetails?.trim()) specs.push(`Ekran turi: ${pcData.screenDetails.trim()}`);
+          if (pcData.battery?.trim()) specs.push(`Batareya / Avtonomlik: ${pcData.battery.trim()}`);
+          if (pcData.warranty?.trim()) specs.push(`Kafolat: ${pcData.warranty.trim()}`);
+        }
+        // 4. Monitor
+        else if (pcData.subType === 'Monitor') {
+          if (pcData.screenSize?.trim()) specs.push(`Ekran dyuymi: ${pcData.screenSize.trim()}`);
+          if (pcData.resolution?.trim()) specs.push(`Ruxsat (Resolution): ${pcData.resolution.trim()}`);
+          if (pcData.refreshRate?.trim()) specs.push(`Yangilanish tezligi: ${pcData.refreshRate.trim()}`);
+          if (pcData.matrixType?.trim()) specs.push(`Matritsa turi: ${pcData.matrixType.trim()}`);
+          if (pcData.ports?.trim()) specs.push(`Ulanish portlari: ${pcData.ports.trim()}`);
+          if (pcData.warranty?.trim()) specs.push(`Kafolat: ${pcData.warranty.trim()}`);
+        }
+        // 5. Protsessor (CPU)
+        else if (pcData.subType === 'Protsessor (CPU)') {
+          if (pcData.socket?.trim()) specs.push(`Soket: ${pcData.socket.trim()}`);
+          if (pcData.cores?.trim()) specs.push(`Yadro va oqimlar: ${pcData.cores.trim()}`);
+          if (pcData.frequency?.trim()) specs.push(`Chastota: ${pcData.frequency.trim()}`);
+          if (pcData.tdp?.trim()) specs.push(`TDP quvvati: ${pcData.tdp.trim()}`);
+          if (pcData.warranty?.trim()) specs.push(`Kafolat: ${pcData.warranty.trim()}`);
+        }
+        // 6. Ona plata (Motherboard)
+        else if (pcData.subType === 'Ona plata (Motherboard)') {
+          if (pcData.chipset?.trim()) specs.push(`Chipset va Soket: ${pcData.chipset.trim()}`);
+          if (pcData.formFactor?.trim()) specs.push(`Form-faktor: ${pcData.formFactor.trim()}`);
+          if (pcData.ramSlots?.trim()) specs.push(`RAM slotlari: ${pcData.ramSlots.trim()}`);
+          if (pcData.warranty?.trim()) specs.push(`Kafolat: ${pcData.warranty.trim()}`);
+        }
+        // 7. Operativ xotira (RAM)
+        else if (pcData.subType === 'Operativ xotira (RAM)') {
+          if (pcData.ram?.trim()) specs.push(`Xotira hajmi: ${pcData.ram.trim()}`);
+          if (pcData.ramTypeFreq?.trim()) specs.push(`Turi va chastotasi: ${pcData.ramTypeFreq.trim()}`);
+          if (pcData.warranty?.trim()) specs.push(`Kafolat: ${pcData.warranty.trim()}`);
+        }
+        // 8. Doimiy xotira (SSD / HDD)
+        else if (pcData.subType === 'Doimiy xotira (SSD / HDD)') {
+          if (pcData.storageCapacity?.trim()) specs.push(`Sig'imi: ${pcData.storageCapacity.trim()}`);
+          if (pcData.storageType?.trim()) specs.push(`Form-faktor va interfeys: ${pcData.storageType.trim()}`);
+          if (pcData.speed?.trim()) specs.push(`Tezligi (O'qish/Yozish): ${pcData.speed.trim()}`);
+          if (pcData.warranty?.trim()) specs.push(`Kafolat: ${pcData.warranty.trim()}`);
+        }
+        // 9. Blok pitaniya (PSU)
+        else if (pcData.subType === 'Blok pitaniya (PSU)') {
+          if (pcData.power?.trim()) specs.push(`Quvvati: ${pcData.power.trim()}`);
+          if (pcData.certification?.trim()) specs.push(`Sertifikati: ${pcData.certification.trim()}`);
+          if (pcData.modularity?.trim()) specs.push(`Modullik: ${pcData.modularity.trim()}`);
+          if (pcData.warranty?.trim()) specs.push(`Kafolat: ${pcData.warranty.trim()}`);
+        }
+        // 10. Boshqa
+        else {
+          if (pcData.generalSpecs?.trim()) specs.push(`Parametrlar: ${pcData.generalSpecs.trim()}`);
+          if (pcData.warranty?.trim()) specs.push(`Kafolat: ${pcData.warranty.trim()}`);
+        }
+
+        if (selectedColors.length > 0) specs.push(`Mavjud ranglar: ${selectedColors.join(', ')}`);
+
+        customSpecs.forEach(s => {
+          if (s.label?.trim() && s.value?.trim()) specs.push(`${s.label.trim()}: ${s.value.trim()}`);
+        });
+
+        specSummary = specs.join('\n');
+        
+        // Only laptops send multi-storage options if selected, otherwise empty
+        if (pcData.subType === 'Noutbuk (Laptop)' && selectedStorage.length > 0) {
+          data.append('storage', JSON.stringify(selectedStorage));
+        } else {
+          data.append('storage', JSON.stringify([]));
+        }
       } else if (formData.category === 'Used Phones') {
         const specs = [
           `Operativ xotira (RAM): ${formData.ram}`,
@@ -484,23 +741,6 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
         data.append('storage', JSON.stringify(selectedStorage));
         data.append('battery', parseInt(formData.batteryHealth) || 95);
         data.append('grade', formData.deviceCondition);
-      } else if (formData.category === 'Elektronika') {
-        const specs = [
-          `Qurilma turi: ${formData.electronicsType}`,
-          `Operativ xotira (RAM): ${formData.ram}`,
-          `Doimiy xotira: ${selectedStorage.join(', ')}`,
-          `Ekran: ${formData.screenSize}`,
-          `Protsessor: ${formData.processor}`,
-          `Avtonomlik: ${formData.electronicsBattery}`,
-          `Mavjud ranglar: ${selectedColors.join(', ')}`
-        ];
-
-        customSpecs.forEach(s => {
-          if (s.label?.trim() && s.value?.trim()) specs.push(`${s.label.trim()}: ${s.value.trim()}`);
-        });
-
-        specSummary = specs.join('\n');
-        data.append('storage', JSON.stringify(selectedStorage));
       } else {
         // Standard Phones
         const specs = [
@@ -553,11 +793,6 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
         await createProduct(data);
       }
 
-      // Vercel saytidagi keshni avtomatik yangilash (On-demand revalidation)
-      try {
-        fetch('https://xonbozoruz.vercel.app/api/revalidate', { method: 'POST', mode: 'no-cors' }).catch(() => {});
-      } catch (_) {}
-
       onRefresh();
       onClose();
     } catch (err) {
@@ -583,6 +818,8 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
             <p className="text-xs text-slate-400">
               {formData.category === 'Home appliances'
                 ? 'Maishiy texnika va uy jihozlari parametrlarini kiritish'
+                : formData.category === 'Elektronika'
+                ? 'Kompyuter, videokarta, noutbuk va elektronika parametrlarini kiritish'
                 : 'Katalogga yangi mahsulot parametrlari va texnik xususiyatlarini kiritish'}
             </p>
           </div>
@@ -692,7 +929,13 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                placeholder={formData.category === 'Home appliances' ? 'Artel Apetito 00-G GK' : 'iPhone 16 Pro Max 256GB'}
+                placeholder={
+                  formData.category === 'Home appliances' 
+                    ? 'Artel Apetito 00-G GK' 
+                    : formData.category === 'Elektronika'
+                    ? 'Palit GeForce RTX 4070 Super Dual 12GB'
+                    : 'iPhone 16 Pro Max 256GB'
+                }
                 required
                 className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-semibold"
               />
@@ -712,9 +955,9 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
                 >
                   <option value="Phones">Phones / Telefonlar</option>
                   <option value="Used Phones">Used Phones (B/U Telefonlar)</option>
+                  <option value="Elektronika">Kompyuter va Elektronika (PC, Videokarta, Noutbuk)</option>
                   <option value="Home appliances">Home appliances (Maishiy texnika)</option>
                   <option value="Aksessuarlar">Aksessuarlar</option>
-                  <option value="Elektronika">Elektronika</option>
                 </select>
               </div>
 
@@ -746,7 +989,7 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
                   name="customBrand"
                   value={formData.customBrand}
                   onChange={handleInputChange}
-                  placeholder="masalan: Artel, Dyson, Rowenta, Tefal..."
+                  placeholder="masalan: Palit, Zotac, DeepCool, Artel..."
                   required
                   className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-semibold"
                 />
@@ -764,7 +1007,7 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
                   name="price"
                   value={formData.price}
                   onChange={handleInputChange}
-                  placeholder="2439000"
+                  placeholder="8500000"
                   required
                   className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-bold"
                 />
@@ -779,7 +1022,7 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
                   name="oldPrice"
                   value={formData.oldPrice}
                   onChange={handleInputChange}
-                  placeholder="2539000"
+                  placeholder="9200000"
                   className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-medium"
                 />
               </div>
@@ -795,7 +1038,7 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
                   name="discount"
                   value={formData.discount}
                   onChange={handleInputChange}
-                  placeholder="4"
+                  placeholder="8"
                   className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-medium"
                 />
               </div>
@@ -819,7 +1062,715 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
 
           {/* 3. DYNAMIC TECHNICAL SPECIFICATIONS BY CATEGORY */}
 
-          {/* A) HOME APPLIANCES (MAISHIY TEXNIKA) */}
+          {/* A) KOMPYUTER VA ELEKTRONIKA (VIDEOKARTA, PC, NOUTBUK, KOMPONENTLAR) */}
+          {formData.category === 'Elektronika' && (
+            <div className="space-y-4 pt-2">
+              <div className="border-b border-slate-100 pb-2 flex items-center justify-between">
+                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                  <Monitor className="w-4 h-4 text-blue-600" />
+                  <span>Kompyuter va Texnika Xususiyatlari</span>
+                </h3>
+                <span className="text-[10px] text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full font-bold border border-blue-200">
+                  PC & Hardware
+                </span>
+              </div>
+
+              {/* Sub-type Selection: Videokarta, Kompyuter, Noutbuk, Monitor, etc. */}
+              <div>
+                <label className="block text-xs font-bold text-slate-900 mb-1.5 flex items-center gap-1">
+                  <Sliders className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Qurilma / Kompyuter jihozi turi:</span>
+                </label>
+                <select
+                  value={pcData.subType}
+                  onChange={(e) => setPcData(prev => ({ ...prev, subType: e.target.value }))}
+                  className="w-full px-3.5 py-2.5 bg-blue-50/50 border border-blue-200 rounded-xl text-xs text-blue-900 focus:outline-none focus:ring-2 focus:ring-black font-bold cursor-pointer"
+                >
+                  {pcSubTypeOptions.map(t => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* If subType is Boshqa */}
+              {pcData.subType === 'Boshqa jihoz / Elektronika' && (
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                    Aniq jihoz nomini yozing:
+                  </label>
+                  <input
+                    type="text"
+                    value={pcData.customSubType}
+                    onChange={(e) => setPcData(prev => ({ ...prev, customSubType: e.target.value }))}
+                    placeholder="masalan: Wi-Fi Router, Ovoz kartasi, UPS..."
+                    className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                  />
+                </div>
+              )}
+
+              {/* SUB-FORM 1: VIDEOKARTA (GPU) */}
+              {pcData.subType === 'Videokarta (GPU)' && (
+                <div className="p-3.5 bg-slate-50/90 rounded-2xl border border-slate-200 space-y-3">
+                  <div className="text-[11px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 text-amber-500" />
+                    <span>Videokarta Texnik Parametrlari (Ekran dyuymisiz)</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Grafik protsessor (Model)
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.gpuModel}
+                        onChange={(e) => setPcData(prev => ({ ...prev, gpuModel: e.target.value }))}
+                        placeholder="RTX 4070 Super / RX 7800 XT"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Video xotira (VRAM)
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.vram}
+                        onChange={(e) => setPcData(prev => ({ ...prev, vram: e.target.value }))}
+                        placeholder="12 GB GDDR6X / 16 GB GDDR6"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Shina kengligi (Bus Width)
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.busWidth}
+                        onChange={(e) => setPcData(prev => ({ ...prev, busWidth: e.target.value }))}
+                        placeholder="192-bit / 256-bit"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Tavsiya etilgan Blok Pitaniya
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.recommendedPsu}
+                        onChange={(e) => setPcData(prev => ({ ...prev, recommendedPsu: e.target.value }))}
+                        placeholder="650 W / 750 W"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Interfeys va Portlar
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.ports}
+                        onChange={(e) => setPcData(prev => ({ ...prev, ports: e.target.value }))}
+                        placeholder="PCI-e 4.0, 3x DP, 1x HDMI"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Sovutish turi
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.cooling}
+                        onChange={(e) => setPcData(prev => ({ ...prev, cooling: e.target.value }))}
+                        placeholder="3x Kuler (Triple Fan)"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      Kafolat muddati
+                    </label>
+                    <input
+                      type="text"
+                      value={pcData.warranty}
+                      onChange={(e) => setPcData(prev => ({ ...prev, warranty: e.target.value }))}
+                      placeholder="1 yil rasmiy kafolat / 2 yil"
+                      className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* SUB-FORM 2: DESKTOP PC (TIZIM BLOKI) */}
+              {pcData.subType === 'Kompyuter (Desktop PC / Tizim bloki)' && (
+                <div className="p-3.5 bg-slate-50/90 rounded-2xl border border-slate-200 space-y-3">
+                  <div className="text-[11px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <Monitor className="w-3.5 h-3.5 text-blue-500" />
+                    <span>Kompyuter Jamlanmasi Parametrlari (Ekransiz Tizim bloki)</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Protsessor (CPU)
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.cpu}
+                        onChange={(e) => setPcData(prev => ({ ...prev, cpu: e.target.value }))}
+                        placeholder="Intel Core i7-14700K / Ryzen 7 7800X3D"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Videokarta (GPU)
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.gpu}
+                        onChange={(e) => setPcData(prev => ({ ...prev, gpu: e.target.value }))}
+                        placeholder="RTX 4070 Ti Super 16GB"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Operativ xotira (RAM)
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.ram}
+                        onChange={(e) => setPcData(prev => ({ ...prev, ram: e.target.value }))}
+                        placeholder="32 GB DDR5 6000MHz"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Asosiy xotira (SSD / M.2)
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.storageDrive}
+                        onChange={(e) => setPcData(prev => ({ ...prev, storageDrive: e.target.value }))}
+                        placeholder="1 TB M.2 NVMe SSD"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Ona plata & Chipset
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.motherboard}
+                        onChange={(e) => setPcData(prev => ({ ...prev, motherboard: e.target.value }))}
+                        placeholder="B760 GAMING PLUS / Z790"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Blok pitaniya (PSU)
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.psu}
+                        onChange={(e) => setPcData(prev => ({ ...prev, psu: e.target.value }))}
+                        placeholder="750W 80 Plus Gold"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Sovutish tizimi
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.cooling}
+                        onChange={(e) => setPcData(prev => ({ ...prev, cooling: e.target.value }))}
+                        placeholder="240mm Suyuqlik sovutish / Tower Cooler"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Operatsion tizim
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.os}
+                        onChange={(e) => setPcData(prev => ({ ...prev, os: e.target.value }))}
+                        placeholder="Windows 11 Pro / FreeDOS"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Korpus (Case)
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.caseModel}
+                        onChange={(e) => setPcData(prev => ({ ...prev, caseModel: e.target.value }))}
+                        placeholder="Aquarium ARGB Glass"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        Kafolat
+                      </label>
+                      <input
+                        type="text"
+                        value={pcData.warranty}
+                        onChange={(e) => setPcData(prev => ({ ...prev, warranty: e.target.value }))}
+                        placeholder="1 yil rasmiy kafolat"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SUB-FORM 3: NOUTBUK (LAPTOP) */}
+              {pcData.subType === 'Noutbuk (Laptop)' && (
+                <div className="p-3.5 bg-slate-50/90 rounded-2xl border border-slate-200 space-y-3">
+                  <div className="text-[11px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <Laptop className="w-3.5 h-3.5 text-indigo-500" />
+                    <span>Noutbuk Parametrlari</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Protsessor (CPU)</label>
+                      <input
+                        type="text"
+                        value={pcData.cpu}
+                        onChange={(e) => setPcData(prev => ({ ...prev, cpu: e.target.value }))}
+                        placeholder="Core i7-13620H / Apple M3"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Videokarta</label>
+                      <input
+                        type="text"
+                        value={pcData.gpu}
+                        onChange={(e) => setPcData(prev => ({ ...prev, gpu: e.target.value }))}
+                        placeholder="RTX 4060 8GB / Integratsiyalangan"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Operativ xotira (RAM)</label>
+                      <input
+                        type="text"
+                        value={pcData.ram}
+                        onChange={(e) => setPcData(prev => ({ ...prev, ram: e.target.value }))}
+                        placeholder="16 GB DDR5"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Doimiy xotira (SSD)</label>
+                      <input
+                        type="text"
+                        value={pcData.storageDrive}
+                        onChange={(e) => setPcData(prev => ({ ...prev, storageDrive: e.target.value }))}
+                        placeholder="512 GB SSD / 1 TB SSD"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Ekran dyuymi</label>
+                      <input
+                        type="text"
+                        value={pcData.screenSize}
+                        onChange={(e) => setPcData(prev => ({ ...prev, screenSize: e.target.value }))}
+                        placeholder="15.6 dyuym / 16.0 dyuym"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Ekran turi va Hz</label>
+                      <input
+                        type="text"
+                        value={pcData.screenDetails}
+                        onChange={(e) => setPcData(prev => ({ ...prev, screenDetails: e.target.value }))}
+                        placeholder="IPS 144Hz Full HD / OLED 120Hz"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Batareya / Avtonomlik</label>
+                      <input
+                        type="text"
+                        value={pcData.battery}
+                        onChange={(e) => setPcData(prev => ({ ...prev, battery: e.target.value }))}
+                        placeholder="6-8 soat / 90 Wh"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Kafolat</label>
+                      <input
+                        type="text"
+                        value={pcData.warranty}
+                        onChange={(e) => setPcData(prev => ({ ...prev, warranty: e.target.value }))}
+                        placeholder="1 yil rasmiy kafolat"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SUB-FORM 4: MONITOR */}
+              {pcData.subType === 'Monitor' && (
+                <div className="p-3.5 bg-slate-50/90 rounded-2xl border border-slate-200 space-y-3">
+                  <div className="text-[11px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <Monitor className="w-3.5 h-3.5 text-blue-500" />
+                    <span>Monitor Parametrlari</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Ekran dyuymi</label>
+                      <input
+                        type="text"
+                        value={pcData.screenSize}
+                        onChange={(e) => setPcData(prev => ({ ...prev, screenSize: e.target.value }))}
+                        placeholder="27 dyuym / 24 dyuym / 32 dyuym"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Ruxsat (Resolution)</label>
+                      <input
+                        type="text"
+                        value={pcData.resolution}
+                        onChange={(e) => setPcData(prev => ({ ...prev, resolution: e.target.value }))}
+                        placeholder="2K QHD (2560x1440) / Full HD"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Yangilanish tezligi (Hz)</label>
+                      <input
+                        type="text"
+                        value={pcData.refreshRate}
+                        onChange={(e) => setPcData(prev => ({ ...prev, refreshRate: e.target.value }))}
+                        placeholder="165 Hz / 240 Hz / 144 Hz"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Matritsa turi</label>
+                      <input
+                        type="text"
+                        value={pcData.matrixType}
+                        onChange={(e) => setPcData(prev => ({ ...prev, matrixType: e.target.value }))}
+                        placeholder="Fast IPS / OLED / VA"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Portlar</label>
+                      <input
+                        type="text"
+                        value={pcData.ports}
+                        onChange={(e) => setPcData(prev => ({ ...prev, ports: e.target.value }))}
+                        placeholder="HDMI 2.1, DisplayPort 1.4, Type-C"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Kafolat</label>
+                      <input
+                        type="text"
+                        value={pcData.warranty}
+                        onChange={(e) => setPcData(prev => ({ ...prev, warranty: e.target.value }))}
+                        placeholder="1 yil rasmiy kafolat"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SUB-FORM 5: PROTSESSOR (CPU) */}
+              {pcData.subType === 'Protsessor (CPU)' && (
+                <div className="p-3.5 bg-slate-50/90 rounded-2xl border border-slate-200 space-y-3">
+                  <div className="text-[11px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-purple-500" />
+                    <span>Protsessor Parametrlari (Ekransiz)</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Soket</label>
+                      <input
+                        type="text"
+                        value={pcData.socket}
+                        onChange={(e) => setPcData(prev => ({ ...prev, socket: e.target.value }))}
+                        placeholder="LGA1700 / AM5 / AM4"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Yadro va oqimlar</label>
+                      <input
+                        type="text"
+                        value={pcData.cores}
+                        onChange={(e) => setPcData(prev => ({ ...prev, cores: e.target.value }))}
+                        placeholder="8 yadro, 16 oqim"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">Maksimal chastota</label>
+                      <input
+                        type="text"
+                        value={pcData.frequency}
+                        onChange={(e) => setPcData(prev => ({ ...prev, frequency: e.target.value }))}
+                        placeholder="5.4 GHz Turbo"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">TDP Quvvati & Kafolat</label>
+                      <input
+                        type="text"
+                        value={pcData.tdp}
+                        onChange={(e) => setPcData(prev => ({ ...prev, tdp: e.target.value }))}
+                        placeholder="125 W / 65 W"
+                        className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SUB-FORM 6: ONA PLATA, RAM, SSD, BLOK PITANIYA, YANADA SODDA SHABLONLAR */}
+              {['Ona plata (Motherboard)', 'Operativ xotira (RAM)', 'Doimiy xotira (SSD / HDD)', 'Blok pitaniya (PSU)', 'Sovutish tizimi (Kuler / Vodyanka)', 'Kompyuter korpusi (Case)', 'Periferiya (Klaviatura / Sichqoncha / Naushnik)', 'Boshqa jihoz / Elektronika'].includes(pcData.subType) && (
+                <div className="p-3.5 bg-slate-50/90 rounded-2xl border border-slate-200 space-y-3">
+                  <div className="text-[11px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <Disc className="w-3.5 h-3.5 text-slate-600" />
+                    <span>{pcData.subType} Parametrlari (Ekransiz butlovchi qism)</span>
+                  </div>
+
+                  {pcData.subType === 'Ona plata (Motherboard)' && (
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-700 mb-1">Chipset va Soket</label>
+                        <input
+                          type="text"
+                          value={pcData.chipset}
+                          onChange={(e) => setPcData(prev => ({ ...prev, chipset: e.target.value }))}
+                          placeholder="AMD B650 / Intel Z790"
+                          className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-700 mb-1">Form-faktor & Slotlar</label>
+                        <input
+                          type="text"
+                          value={pcData.formFactor}
+                          onChange={(e) => setPcData(prev => ({ ...prev, formFactor: e.target.value }))}
+                          placeholder="ATX / 4x DDR5"
+                          className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {pcData.subType === 'Operativ xotira (RAM)' && (
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-700 mb-1">Xotira hajmi</label>
+                        <input
+                          type="text"
+                          value={pcData.ram}
+                          onChange={(e) => setPcData(prev => ({ ...prev, ram: e.target.value }))}
+                          placeholder="32 GB (2x16GB kit)"
+                          className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-700 mb-1">Turi va Chastotasi</label>
+                        <input
+                          type="text"
+                          value={pcData.ramTypeFreq}
+                          onChange={(e) => setPcData(prev => ({ ...prev, ramTypeFreq: e.target.value }))}
+                          placeholder="DDR5 6000MHz CL30"
+                          className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {pcData.subType === 'Doimiy xotira (SSD / HDD)' && (
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-700 mb-1">Sig'imi</label>
+                        <input
+                          type="text"
+                          value={pcData.storageCapacity}
+                          onChange={(e) => setPcData(prev => ({ ...prev, storageCapacity: e.target.value }))}
+                          placeholder="1 TB / 2 TB / 500 GB"
+                          className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-700 mb-1">Interfeys & Tezlik</label>
+                        <input
+                          type="text"
+                          value={pcData.speed}
+                          onChange={(e) => setPcData(prev => ({ ...prev, speed: e.target.value }))}
+                          placeholder="PCIe 4.0 (7000 MB/s)"
+                          className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {pcData.subType === 'Blok pitaniya (PSU)' && (
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-700 mb-1">Quvvati & Sertifikati</label>
+                        <input
+                          type="text"
+                          value={pcData.power}
+                          onChange={(e) => setPcData(prev => ({ ...prev, power: e.target.value }))}
+                          placeholder="750W 80 Plus Gold"
+                          className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-700 mb-1">Modullik turi</label>
+                        <input
+                          type="text"
+                          value={pcData.modularity}
+                          onChange={(e) => setPcData(prev => ({ ...prev, modularity: e.target.value }))}
+                          placeholder="To'liq modulli / Standart"
+                          className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      Kafolat muddati
+                    </label>
+                    <input
+                      type="text"
+                      value={pcData.warranty}
+                      onChange={(e) => setPcData(prev => ({ ...prev, warranty: e.target.value }))}
+                      placeholder="1 yil rasmiy kafolat / 2 yil"
+                      className="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 font-medium"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Ranglar */}
+              <div>
+                <label className="block text-xs font-bold text-slate-900 mb-1.5 flex items-center gap-1">
+                  <Palette className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Mavjud ranglar</span>
+                </label>
+                
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {currentPresetColors.map(color => {
+                    const isSelected = selectedColors.includes(color);
+                    return (
+                      <button
+                        key={color}
+                        type="button"
+                        onClick={() => toggleColorOption(color)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                          isSelected
+                            ? 'bg-slate-900 text-white shadow-xs'
+                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                        }`}
+                      >
+                        {isSelected ? `● ${color}` : color}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={customColorInput}
+                    onChange={(e) => setCustomColorInput(e.target.value)}
+                    placeholder="Boshqa rang..."
+                    className="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-medium"
+                  />
+                  <button
+                    type="button"
+                    onClick={addCustomColor}
+                    className="px-3.5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs rounded-xl transition-all cursor-pointer shrink-0"
+                  >
+                    + Qo'shish
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* B) HOME APPLIANCES (MAISHIY TEXNIKA) */}
           {formData.category === 'Home appliances' && (
             <div className="space-y-4 pt-2">
               <div className="border-b border-slate-100 pb-2 flex items-center justify-between">
@@ -993,7 +1944,7 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
             </div>
           )}
 
-          {/* B) AKSESSUARLAR */}
+          {/* C) AKSESSUARLAR */}
           {formData.category === 'Aksessuarlar' && (
             <div className="space-y-4 pt-2">
               <div className="border-b border-slate-100 pb-2 flex items-center justify-between">
@@ -1108,7 +2059,7 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
             </div>
           )}
 
-          {/* C) PHONES & USED PHONES (SMARTFONLAR) */}
+          {/* D) PHONES & USED PHONES (SMARTFONLAR) */}
           {(formData.category === 'Phones' || formData.category === 'Used Phones') && (
             <div className="space-y-4 pt-2">
               <div className="border-b border-slate-100 pb-2 flex items-center justify-between">
@@ -1344,151 +2295,6 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
             </div>
           )}
 
-          {/* D) ELEKTRONIKA */}
-          {formData.category === 'Elektronika' && (
-            <div className="space-y-4 pt-2">
-              <div className="border-b border-slate-100 pb-2 flex items-center justify-between">
-                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                  <Monitor className="w-4 h-4 text-blue-500" />
-                  <span>Elektronika Parametrlari</span>
-                </h3>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-slate-900 mb-1.5">
-                    Qurilma turi
-                  </label>
-                  <input
-                    type="text"
-                    name="electronicsType"
-                    value={formData.electronicsType}
-                    onChange={handleInputChange}
-                    placeholder="Noutbuk, Planshet, Smart soat"
-                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-semibold"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-900 mb-1.5">
-                    Operativ xotira (RAM)
-                  </label>
-                  <select
-                    name="ram"
-                    value={formData.ram}
-                    onChange={handleInputChange}
-                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-semibold cursor-pointer"
-                  >
-                    {ramOptions.map(ram => (
-                      <option key={ram} value={ram}>{ram}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {/* Xotira variantlari */}
-              <div>
-                <label className="block text-xs font-bold text-slate-900 mb-1.5">
-                  Xotira hajmi (SSD / ROM)
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {storageOptions.map(opt => {
-                    const isSelected = selectedStorage.includes(opt);
-                    return (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => toggleStorageOption(opt)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                          isSelected
-                            ? 'bg-black text-white shadow-xs'
-                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                        }`}
-                      >
-                        {isSelected ? `✓ ${opt}` : opt}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold text-slate-900 mb-1.5">
-                    Ekran / Displey
-                  </label>
-                  <input
-                    type="text"
-                    name="screenSize"
-                    value={formData.screenSize}
-                    onChange={handleInputChange}
-                    placeholder="14.2 dyuym Liquid Retina XDR"
-                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-medium"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-900 mb-1.5">
-                    Batareya / Avtonomlik
-                  </label>
-                  <input
-                    type="text"
-                    name="electronicsBattery"
-                    value={formData.electronicsBattery}
-                    onChange={handleInputChange}
-                    placeholder="18 soatgacha"
-                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-medium"
-                  />
-                </div>
-              </div>
-
-              {/* Ranglar */}
-              <div>
-                <label className="block text-xs font-bold text-slate-900 mb-1.5 flex items-center gap-1">
-                  <Palette className="w-3.5 h-3.5 text-slate-500" />
-                  <span>Mavjud ranglar</span>
-                </label>
-                
-                <div className="flex flex-wrap gap-2 mb-2">
-                  {currentPresetColors.map(color => {
-                    const isSelected = selectedColors.includes(color);
-                    return (
-                      <button
-                        key={color}
-                        type="button"
-                        onClick={() => toggleColorOption(color)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                          isSelected
-                            ? 'bg-slate-900 text-white shadow-xs'
-                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                        }`}
-                      >
-                        {isSelected ? `● ${color}` : color}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={customColorInput}
-                    onChange={(e) => setCustomColorInput(e.target.value)}
-                    placeholder="Boshqa rang..."
-                    className="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-medium"
-                  />
-                  <button
-                    type="button"
-                    onClick={addCustomColor}
-                    className="px-3.5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs rounded-xl transition-all cursor-pointer shrink-0"
-                  >
-                    + Qo'shish
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
           {/* QO'SHIMCHA XUSUSIYATLAR (UNIVERSAL KEY-VALUE) */}
           <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-3">
             <div className="flex items-center justify-between">
@@ -1529,14 +2335,14 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
                 type="text"
                 value={newSpecLabel}
                 onChange={(e) => setNewSpecLabel(e.target.value)}
-                placeholder="Parametr nomi (masalan: Muzlatish quvvati)..."
+                placeholder="Parametr nomi (masalan: Tavsiya etilgan quvvat)..."
                 className="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-medium"
               />
               <input
                 type="text"
                 value={newSpecValue}
                 onChange={(e) => setNewSpecValue(e.target.value)}
-                placeholder="Qiymati (masalan: 12 kg/kun)..."
+                placeholder="Qiymati (masalan: 750W)..."
                 className="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-black font-medium"
               />
               <button
