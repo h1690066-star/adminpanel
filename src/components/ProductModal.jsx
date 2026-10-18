@@ -719,19 +719,18 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
           data.append('storage', JSON.stringify([]));
         }
       } else if (formData.category === 'Used Phones') {
-        const specs = [
-          `Operativ xotira (RAM): ${formData.ram}`,
-          `Doimiy xotira (ROM): ${selectedStorage.join(', ')}`,
-          `Ekran dyuymi: ${formData.screenSize}`,
-          `Ekran turi: ${formData.screenDetails}`,
-          `Protsessor: ${formData.processor}`,
-          `SIM-karta turi: ${formData.simType}`,
-          `Region: ${formData.region}`,
-          `Batareya holati: ${formData.batteryHealth}`,
-          `Tashqi holati: ${formData.deviceCondition}`,
-          `Komplekt: ${formData.boxIncluded}`,
-          `Mavjud ranglar: ${selectedColors.join(', ')}`
-        ];
+        const specs = [];
+        if (formData.ram?.trim()) specs.push(`Operativ xotira (RAM): ${formData.ram.trim()}`);
+        if (selectedStorage.length > 0) specs.push(`Doimiy xotira (ROM): ${selectedStorage.join(', ')}`);
+        if (formData.screenSize?.trim()) specs.push(`Ekran dyuymi: ${formData.screenSize.trim()}`);
+        if (formData.screenDetails?.trim()) specs.push(`Ekran turi: ${formData.screenDetails.trim()}`);
+        if (formData.processor?.trim()) specs.push(`Protsessor: ${formData.processor.trim()}`);
+        if (formData.simType?.trim()) specs.push(`SIM-karta turi: ${formData.simType.trim()}`);
+        if (formData.region?.trim()) specs.push(`Region: ${formData.region.trim()}`);
+        if (formData.batteryHealth?.trim()) specs.push(`Batareya holati: ${formData.batteryHealth.trim()}`);
+        if (formData.deviceCondition?.trim()) specs.push(`Tashqi holati: ${formData.deviceCondition.trim()}`);
+        if (formData.boxIncluded?.trim()) specs.push(`Komplekt: ${formData.boxIncluded.trim()}`);
+        if (selectedColors.length > 0) specs.push(`Mavjud ranglar: ${selectedColors.join(', ')}`);
 
         customSpecs.forEach(s => {
           if (s.label?.trim() && s.value?.trim()) specs.push(`${s.label.trim()}: ${s.value.trim()}`);
@@ -743,16 +742,15 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
         data.append('grade', formData.deviceCondition);
       } else {
         // Standard Phones
-        const specs = [
-          `Operativ xotira (RAM): ${formData.ram}`,
-          `Doimiy xotira (ROM): ${selectedStorage.join(', ')}`,
-          `Ekran dyuymi: ${formData.screenSize}`,
-          `Ekran turi: ${formData.screenDetails}`,
-          `Protsessor: ${formData.processor}`,
-          `SIM-karta turi: ${formData.simType}`,
-          `Region: ${formData.region}`,
-          `Mavjud ranglar: ${selectedColors.join(', ')}`
-        ];
+        const specs = [];
+        if (formData.ram?.trim()) specs.push(`Operativ xotira (RAM): ${formData.ram.trim()}`);
+        if (selectedStorage.length > 0) specs.push(`Doimiy xotira (ROM): ${selectedStorage.join(', ')}`);
+        if (formData.screenSize?.trim()) specs.push(`Ekran dyuymi: ${formData.screenSize.trim()}`);
+        if (formData.screenDetails?.trim()) specs.push(`Ekran turi: ${formData.screenDetails.trim()}`);
+        if (formData.processor?.trim()) specs.push(`Protsessor: ${formData.processor.trim()}`);
+        if (formData.simType?.trim()) specs.push(`SIM-karta turi: ${formData.simType.trim()}`);
+        if (formData.region?.trim()) specs.push(`Region: ${formData.region.trim()}`);
+        if (selectedColors.length > 0) specs.push(`Mavjud ranglar: ${selectedColors.join(', ')}`);
 
         customSpecs.forEach(s => {
           if (s.label?.trim() && s.value?.trim()) specs.push(`${s.label.trim()}: ${s.value.trim()}`);
@@ -764,9 +762,21 @@ export default function ProductModal({ isOpen, onClose, onRefresh, editingProduc
 
       data.append('colors', JSON.stringify(selectedColors));
 
-      const descText = formData.description
-        ? `${formData.description}\n\n${specSummary}`
-        : specSummary;
+      // Structured specs array for clean rendering
+      const structuredSpecs = (specSummary || '')
+        .split('\n')
+        .map(line => {
+          const colonIdx = line.indexOf(':');
+          if (colonIdx > 0) {
+            return { label: line.slice(0, colonIdx).trim(), value: line.slice(colonIdx + 1).trim() };
+          }
+          return null;
+        })
+        .filter(s => s && s.label && s.value);
+      data.append('specs', JSON.stringify(structuredSpecs));
+
+      const userDesc = (formData.description || '').trim();
+      const descText = userDesc ? `${userDesc}\n\n${specSummary}` : specSummary;
 
       data.append('description', descText);
       data.append('longDescription', specSummary);
