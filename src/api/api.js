@@ -1,16 +1,16 @@
 const envApiUrl = import.meta.env.VITE_API_URL || '';
 const isDev = import.meta.env.DEV;
-export const SERVER_URL = envApiUrl || (isDev ? '' : 'http://127.0.0.1:3211');
-export const BASE_URL = isDev && !envApiUrl ? '/api' : `${SERVER_URL || 'http://127.0.0.1:3211'}/api`;
+export const SERVER_URL = envApiUrl || (isDev ? '' : 'http://localhost:5000');
+export const BASE_URL = isDev && !envApiUrl ? '/api' : `${SERVER_URL || 'http://localhost:5000'}/api`;
 
 /**
- * Get image full URL pointing to Convex backend or full URL
+ * Get image full URL pointing to backend or full URL
  */
 export function getImageUrl(path) {
   if (!path) return '';
   if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) return path;
   const clean = path.startsWith('/') ? path : `/${path}`;
-  return `${SERVER_URL || 'http://127.0.0.1:3211'}${clean}`;
+  return `${SERVER_URL || 'http://localhost:5000'}${clean}`;
 }
 
 /**
