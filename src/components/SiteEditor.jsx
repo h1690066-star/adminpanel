@@ -160,7 +160,7 @@ export default function SiteEditor() {
       
       setStatusMessage({
         type: 'success',
-        text: '🚀 Muvaffaqiyatli saqlandi va GitHub reposiga push qilindi! Vercel (https://xonbozoruz.vercel.app/) avtomatik ravishda yangilanmoqda.'
+        text: 'Git Hubga push qilindi va Vercel auto-deploy ishga tushdi! Saytni ko\'rish uchun quyidagi havolani bosing. https://xonbozoruz.vercel.app/'
       });
 
       if (res.content?.lastPushedAt) {
@@ -246,7 +246,11 @@ export default function SiteEditor() {
     });
   };
 
-  const currentPreviewSlide = content.heroSlides[previewSlideIdx] || content.heroSlides[0] || {};
+  const currentPreviewSlide =
+    (content?.heroSlides && content.heroSlides[previewSlideIdx]) ||
+    (content?.heroSlides && content.heroSlides[0]) ||
+    DEFAULT_DATA.heroSlides[0] ||
+    {};
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
@@ -457,7 +461,7 @@ export default function SiteEditor() {
                     Header Yuqori Afzalliklari (3 ta imtiyoz)
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                    {content.perks.map((perk, pIdx) => (
+                    {(content?.perks || []).map((perk, pIdx) => (
                       <input
                         key={perk.id || pIdx}
                         type="text"
@@ -500,7 +504,7 @@ export default function SiteEditor() {
 
               {/* Slides list */}
               <div className="space-y-4">
-                {content.heroSlides.map((slide, index) => (
+                {(content?.heroSlides || []).map((slide, index) => (
                   <div
                     key={slide.id || index}
                     className={`rounded-xl border p-4 space-y-3 transition ${
@@ -638,7 +642,7 @@ export default function SiteEditor() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                {content.quickCards.map((card, idx) => (
+                {(content?.quickCards || []).map((card, idx) => (
                   <div key={card.id || idx} className="p-3 rounded-xl border border-slate-100 bg-slate-50/60 space-y-2">
                     <span className="text-[11px] font-bold text-indigo-600">Kartochka #{idx + 1}</span>
                     <input
@@ -895,7 +899,7 @@ export default function SiteEditor() {
 
                 {/* Perks Bar Preview */}
                 <div className="flex items-center justify-between gap-1 text-[10px] text-slate-400 bg-slate-900/60 px-3 py-1.5 rounded-lg border border-slate-800">
-                  {content.perks.map((p, idx) => (
+                  {(content?.perks || []).map((p, idx) => (
                     <span key={idx} className="truncate">
                       ✓ {p.text}
                     </span>
@@ -934,7 +938,7 @@ export default function SiteEditor() {
 
                   {/* Dots */}
                   <div className="absolute bottom-2 right-2 flex items-center gap-1">
-                    {content.heroSlides.map((_, dotIdx) => (
+                    {(content?.heroSlides || []).map((_, dotIdx) => (
                       <button
                         key={dotIdx}
                         onClick={() => setPreviewSlideIdx(dotIdx)}
@@ -948,7 +952,7 @@ export default function SiteEditor() {
 
                 {/* 3. Quick Cards Preview */}
                 <div className="grid grid-cols-2 gap-2">
-                  {content.quickCards.slice(0, 4).map((q, idx) => (
+                  {(content?.quickCards || []).slice(0, 4).map((q, idx) => (
                     <div
                       key={idx}
                       className="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 flex flex-col justify-center"
