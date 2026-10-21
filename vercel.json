@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://full-nbal.onrender.com/api/$1"
+      "destination": "https://xonbozoruz.vercel.app/api/$1"
     },
     {
       "source": "/uploads/(.*)",
-      "destination": "https://full-nbal.onrender.com/uploads/$1"
+      "destination": "https://xonbozoruz.vercel.app/uploads/$1"
     },
     {
       "source": "/(.*)",

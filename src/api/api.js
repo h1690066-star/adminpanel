@@ -2,22 +2,34 @@ export const isDev = Boolean(
   typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV
 );
 
-const envApiUrl =
+const rawEnvUrl =
   (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) || '';
 
-// In dev use relative proxy, in production point to live Render backend
-export const SERVER_URL = envApiUrl || (isDev ? '' : 'https://full-nbal.onrender.com');
+// Ignore localhost env URL when running in production (e.g. on Vercel)
+const envApiUrl =
+  !isDev && (rawEnvUrl.includes('localhost') || rawEnvUrl.includes('127.0.0.1'))
+    ? ''
+    : rawEnvUrl;
+
+export const LIVE_BACKEND_URL = 'https://xonbozoruz.vercel.app';
+
+// In dev use relative proxy, in production point to live Vercel backend
+export const SERVER_URL = envApiUrl || (isDev ? '' : LIVE_BACKEND_URL);
 export const BASE_URL = envApiUrl
   ? `${envApiUrl}/api`
-  : (isDev ? '/api' : 'https://full-nbal.onrender.com/api');
+  : (isDev ? '/api' : `${LIVE_BACKEND_URL}/api`);
 
 const FALLBACK_BASES = [
   BASE_URL,
   '/api',
-  'https://full-nbal.onrender.com/api',
-  'http://localhost:5000/api',
-  'http://localhost:3000/api',
-  'http://127.0.0.1:3211/api',
+  `${LIVE_BACKEND_URL}/api`,
+  ...(isDev
+    ? [
+        'http://localhost:5000/api',
+        'http://localhost:3000/api',
+        'http://127.0.0.1:3211/api',
+      ]
+    : []),
 ];
 
 let activeBaseUrl = BASE_URL;
@@ -37,7 +49,7 @@ export function getImageUrl(path) {
   }
   const clean = path.startsWith('/') ? path : `/${path}`;
   if (isDev) return clean;
-  const host = SERVER_URL || 'https://full-nbal.onrender.com';
+  const host = SERVER_URL || LIVE_BACKEND_URL;
   return `${host}${clean}`;
 }
 

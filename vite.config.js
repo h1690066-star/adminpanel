@@ -49,12 +49,13 @@ const localGitPushPlugin = () => ({
             const data = JSON.parse(body || '{}')
             const rootDir = typeof import.meta.dirname !== 'undefined' ? import.meta.dirname : process.cwd()
             const fullDir = path.resolve(rootDir, '..', 'Full')
-            if (fs.existsSync(fullDir)) {
+            const xonBozorDir = path.join(fullDir, 'xon-bozor')
+            if (fs.existsSync(xonBozorDir)) {
               if (data.content) {
-                const jsonPath = path.join(fullDir, 'xon-bozor', 'lib', 'siteContent.json')
+                const jsonPath = path.join(xonBozorDir, 'lib', 'siteContent.json')
                 fs.writeFileSync(jsonPath, JSON.stringify(data.content, null, 2), 'utf-8')
               }
-              exec('git add . && git commit -m "Auto-update site content from admin panel" && git push origin main', { cwd: fullDir, timeout: 30000 }, (err, stdout, stderr) => {
+              exec('git add . && git commit -m "Auto-update site content from admin panel" && git push origin main', { cwd: xonBozorDir, timeout: 30000 }, (err, stdout, stderr) => {
                 res.setHeader('Content-Type', 'application/json')
                 if (err) {
                   res.end(JSON.stringify({ success: false, error: stderr || err.message }))
