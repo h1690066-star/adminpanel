@@ -12,9 +12,17 @@ import {
   Database,
   Sparkles,
   ChevronRight,
+  X,
 } from 'lucide-react';
 
-export default function Sidebar({ activeTab, setActiveTab, onOpenAddProduct, counts = {} }) {
+export default function Sidebar({
+  activeTab,
+  setActiveTab,
+  onOpenAddProduct,
+  counts = {},
+  isOpen = false,
+  onClose,
+}) {
   const { logout } = useAuth();
 
   const navItems = [
@@ -60,44 +68,52 @@ export default function Sidebar({ activeTab, setActiveTab, onOpenAddProduct, cou
     },
   ];
 
-  return (
-    <aside className="w-72 bg-[#070b14] text-white flex flex-col min-h-screen shrink-0 border-r border-slate-800/80 relative overflow-hidden select-none">
+  const sidebarContent = (
+    <aside className="w-60 2xl:w-64 bg-[#070b14] text-white flex flex-col h-screen shrink-0 border-r border-slate-800/80 relative overflow-y-auto overflow-x-hidden select-none">
       {/* Decorative Background Glows */}
       <div className="pointer-events-none absolute -top-24 -left-24 w-64 h-64 rounded-full bg-indigo-600/15 blur-3xl" />
       <div className="pointer-events-none absolute bottom-12 -right-20 w-56 h-56 rounded-full bg-emerald-500/10 blur-3xl" />
 
       {/* Brand Header */}
-      <div className="p-6 flex items-center justify-between border-b border-white/[0.07] relative z-10">
-        <div className="flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500 via-violet-600 to-emerald-500 p-[1px] shadow-lg shadow-indigo-500/20 shrink-0">
+      <div className="px-4 py-4 2xl:px-5 2xl:py-5 flex items-center justify-between border-b border-white/[0.07] relative z-10">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 via-violet-600 to-emerald-500 p-[1px] shadow-lg shadow-indigo-500/20 shrink-0">
             <div className="w-full h-full bg-[#0b1120] rounded-[15px] flex items-center justify-center text-white">
-              <Smartphone className="w-5 h-5 text-indigo-400" />
+              <Smartphone className="w-4 h-4 text-indigo-400" />
             </div>
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-base font-black tracking-tight text-white leading-none">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5">
+              <h2 className="text-sm 2xl:text-base font-black tracking-tight text-white leading-none truncate">
                 XON BOZOR
               </h2>
-              <span className="px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              <span className="px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shrink-0">
                 PRO
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 font-medium mt-1">
+            <p className="text-[10px] text-slate-400 font-medium mt-1 truncate">
               Yangi avlod boshqaruv tizimi
             </p>
           </div>
         </div>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition cursor-pointer"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        )}
       </div>
 
       {/* Section Label */}
-      <div className="px-6 pt-5 pb-2 text-[10px] font-extrabold uppercase tracking-widest text-slate-500 flex items-center justify-between relative z-10">
+      <div className="px-4 pt-4 pb-1.5 text-[10px] font-extrabold uppercase tracking-widest text-slate-500 flex items-center justify-between relative z-10">
         <span>Asosiy Bo'limlar</span>
         <Sparkles className="w-3 h-3 text-indigo-400" />
       </div>
 
       {/* Navigation Items */}
-      <nav className="flex-1 px-3.5 py-2 space-y-1.5 relative z-10">
+      <nav className="flex-1 px-2.5 py-1.5 space-y-1 relative z-10">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -105,15 +121,15 @@ export default function Sidebar({ activeTab, setActiveTab, onOpenAddProduct, cou
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`w-full group flex items-center justify-between px-3.5 py-3 rounded-2xl text-left transition-all duration-200 cursor-pointer border ${
+              className={`w-full group flex items-center justify-between px-3 py-2.5 rounded-2xl text-left transition-all duration-200 cursor-pointer border ${
                 isActive
                   ? 'bg-gradient-to-r from-indigo-600/25 via-violet-600/15 to-transparent border-indigo-500/40 text-white shadow-lg shadow-indigo-950/50'
                   : 'border-transparent text-slate-400 hover:text-slate-100 hover:bg-white/[0.04]'
               }`}
             >
-              <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-center gap-2.5 min-w-0 flex-1">
                 <div
-                  className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all shrink-0 ${
+                  className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all shrink-0 ${
                     isActive
                       ? 'bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-md shadow-indigo-500/30'
                       : 'bg-slate-900/90 text-slate-400 group-hover:text-white group-hover:bg-slate-800 border border-white/[0.05]'
@@ -121,8 +137,12 @@ export default function Sidebar({ activeTab, setActiveTab, onOpenAddProduct, cou
                 >
                   <Icon className="w-4 h-4" />
                 </div>
-                <div className="truncate">
-                  <div className={`text-xs leading-tight ${isActive ? 'font-bold text-white' : 'font-semibold'}`}>
+                <div className="min-w-0 flex-1">
+                  <div
+                    className={`text-xs leading-tight truncate ${
+                      isActive ? 'font-bold text-white' : 'font-semibold'
+                    }`}
+                  >
                     {item.label}
                   </div>
                   <div className="text-[10px] text-slate-500 truncate mt-0.5">
@@ -131,17 +151,19 @@ export default function Sidebar({ activeTab, setActiveTab, onOpenAddProduct, cou
                 </div>
               </div>
 
-              <div className="flex items-center gap-1.5 shrink-0 ml-2">
+              <div className="flex items-center gap-1 shrink-0 ml-1.5">
                 {item.badge && (
                   <span
-                    className={`px-2 py-0.5 text-[10px] font-bold rounded-full border ${item.badgeColor}`}
+                    className={`px-1.5 py-0.5 text-[9px] font-bold rounded-full border whitespace-nowrap ${item.badgeColor}`}
                   >
                     {item.badge}
                   </span>
                 )}
                 <ChevronRight
-                  className={`w-3.5 h-3.5 transition-transform ${
-                    isActive ? 'text-indigo-400 translate-x-0.5' : 'text-slate-600 opacity-0 group-hover:opacity-100'
+                  className={`w-3 h-3 transition-transform hidden 2xl:block ${
+                    isActive
+                      ? 'text-indigo-400 translate-x-0.5'
+                      : 'text-slate-600 opacity-0 group-hover:opacity-100'
                   }`}
                 />
               </div>
@@ -151,42 +173,62 @@ export default function Sidebar({ activeTab, setActiveTab, onOpenAddProduct, cou
       </nav>
 
       {/* Database Status Card */}
-      <div className="px-4 py-2 relative z-10">
-        <div className="p-3.5 rounded-2xl bg-slate-900/90 border border-white/[0.07] space-y-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs font-bold text-slate-200">
-              <Database className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Backend & Baza</span>
+      <div className="px-3 py-2 relative z-10">
+        <div className="p-3 rounded-2xl bg-slate-900/90 border border-white/[0.07] space-y-1.5">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-200 truncate">
+              <Database className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span className="truncate">Backend & Baza</span>
             </div>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               Faol
             </span>
           </div>
           <p className="text-[10px] text-slate-400 leading-relaxed">
-            Barcha eski va yangi ma'lumotlar sinxronlangan ({counts.products || 25} mahsulot, {counts.orders || 22} buyurtma).
+            Sinxronlangan ({counts.products || 25} tovar, {counts.orders || 22} buyurtma).
           </p>
         </div>
       </div>
 
       {/* Sidebar Footer Actions */}
-      <div className="p-4 space-y-2.5 border-t border-white/[0.07] relative z-10">
+      <div className="p-3 space-y-2 border-t border-white/[0.07] relative z-10">
         <button
           onClick={onOpenAddProduct}
-          className="w-full py-3 px-4 bg-gradient-to-r from-indigo-500 via-violet-600 to-indigo-600 hover:from-indigo-600 hover:to-violet-700 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/25 active:scale-[0.98] cursor-pointer"
+          className="w-full py-2.5 px-3 bg-gradient-to-r from-indigo-500 via-violet-600 to-indigo-600 hover:from-indigo-600 hover:to-violet-700 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-600/25 active:scale-[0.98] cursor-pointer whitespace-nowrap"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4 shrink-0" />
           <span>Yangi mahsulot qo'shish</span>
         </button>
 
         <button
           onClick={logout}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all cursor-pointer"
+          className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all cursor-pointer"
         >
-          <LogOut className="w-4 h-4" />
+          <LogOut className="w-3.5 h-3.5 shrink-0" />
           <span>Tizimdan chiqish</span>
         </button>
       </div>
     </aside>
+  );
+
+  return (
+    <>
+      {/* Desktop Sticky Sidebar */}
+      <div className="hidden lg:block sticky top-0 h-screen shrink-0 z-30">
+        {sidebarContent}
+      </div>
+
+      {/* Mobile / Tablet Drawer Sidebar */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden flex">
+          <div
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs"
+            onClick={onClose}
+          />
+          <div className="relative z-10">{sidebarContent}</div>
+        </div>
+      )}
+    </>
   );
 }

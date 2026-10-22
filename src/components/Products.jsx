@@ -102,65 +102,65 @@ export default function Products({ onOpenAddProduct, onEditProduct, globalSearch
   );
 
   return (
-    <div className="p-6 lg:p-8 space-y-6 max-w-[1600px] mx-auto">
+    <div className="p-4 sm:p-5 2xl:p-7 space-y-5 max-w-[1600px] mx-auto">
       {/* Top Summary Strip */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
-          <div>
-            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+        <div className="bg-white p-4 2xl:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between gap-3 min-w-0">
+          <div className="min-w-0">
+            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">
               Jami Mahsulot Turlari
             </div>
-            <div className="text-2xl font-black text-slate-900 mt-1">
+            <div className="text-xl 2xl:text-2xl font-black text-slate-900 mt-1 whitespace-nowrap">
               {total} <span className="text-xs font-semibold text-slate-400">tur</span>
             </div>
-            <div className="text-[11px] font-semibold text-indigo-600 mt-0.5">
+            <div className="text-[11px] font-semibold text-indigo-600 mt-0.5 truncate">
               Joriy sahifada {pageStockSum} dona zaxira
             </div>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+          <div className="w-10 h-10 2xl:w-11 2xl:h-11 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
             <Layers className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
-          <div>
-            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+        <div className="bg-white p-4 2xl:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between gap-3 min-w-0">
+          <div className="min-w-0">
+            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">
               Sahifadagi Tovar Qiymati
             </div>
-            <div className="text-xl font-black text-slate-900 mt-1">
+            <div className="text-lg 2xl:text-xl font-black text-slate-900 mt-1 whitespace-nowrap truncate">
               {formatMoney(pageValueSum)}
             </div>
-            <div className="text-[11px] font-semibold text-emerald-600 mt-0.5">
+            <div className="text-[11px] font-semibold text-emerald-600 mt-0.5 truncate">
               Faol sotuvdagi mahsulotlar
             </div>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+          <div className="w-10 h-10 2xl:w-11 2xl:h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
             <Wallet className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
-          <div>
-            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+        <div className="bg-white p-4 2xl:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between gap-3 min-w-0">
+          <div className="min-w-0">
+            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">
               Kam Qolgan Zaxira (&le; 5 dona)
             </div>
-            <div className="text-2xl font-black text-slate-900 mt-1">
+            <div className="text-xl 2xl:text-2xl font-black text-slate-900 mt-1 whitespace-nowrap">
               {lowStockCount} <span className="text-xs font-semibold text-slate-400">ta mahsulot</span>
             </div>
-            <div className="text-[11px] font-semibold text-amber-600 mt-0.5">
+            <div className="text-[11px] font-semibold text-amber-600 mt-0.5 truncate">
               Omborni to'ldirish tavsiya etiladi
             </div>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
+          <div className="w-10 h-10 2xl:w-11 2xl:h-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
             <AlertTriangle className="w-5 h-5" />
           </div>
         </div>
       </div>
 
       {/* Filters Bar Card */}
-      <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col lg:flex-row items-center justify-between gap-4">
+      <div className="bg-white rounded-2xl p-3.5 2xl:p-4 border border-slate-200/80 shadow-xs flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
         {/* Search Input */}
-        <div className="relative w-full lg:w-80">
+        <div className="relative flex-1 min-w-[200px] xl:max-w-xs">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
             <Search className="w-4 h-4" />
           </div>
@@ -172,21 +172,21 @@ export default function Products({ onOpenAddProduct, onEditProduct, globalSearch
               setPage(1);
             }}
             placeholder="Mahsulot nomi, brend yoki artikul..."
-            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all font-medium"
+            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all font-medium"
           />
         </div>
 
         {/* Select Dropdowns & Add Button */}
-        <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto justify-end">
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
-            <span>Kategoriya:</span>
+        <div className="flex flex-wrap items-center gap-2 justify-between xl:justify-end">
+          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2">
+            <span className="whitespace-nowrap">Kategoriya:</span>
             <select
               value={category}
               onChange={(e) => {
                 setCategory(e.target.value);
                 setPage(1);
               }}
-              className="bg-transparent text-slate-900 font-bold focus:outline-none cursor-pointer"
+              className="bg-transparent text-slate-900 font-bold focus:outline-none cursor-pointer max-w-[140px] truncate"
             >
               <option value="Barchasi">Barchasi</option>
               <option value="Phones">Phones</option>
@@ -197,8 +197,8 @@ export default function Products({ onOpenAddProduct, onEditProduct, globalSearch
             </select>
           </div>
 
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
-            <span>Brend:</span>
+          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2">
+            <span className="whitespace-nowrap">Brend:</span>
             <select
               value={brand}
               onChange={(e) => {
@@ -218,8 +218,8 @@ export default function Products({ onOpenAddProduct, onEditProduct, globalSearch
             </select>
           </div>
 
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
-            <span>Saralash:</span>
+          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2">
+            <span className="whitespace-nowrap">Saralash:</span>
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
@@ -234,9 +234,9 @@ export default function Products({ onOpenAddProduct, onEditProduct, globalSearch
 
           <button
             onClick={onOpenAddProduct}
-            className="px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs rounded-xl shadow-sm flex items-center gap-1.5 transition-all cursor-pointer"
+            className="px-3.5 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs rounded-xl shadow-sm flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap shrink-0"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 shrink-0" />
             <span>Yangi mahsulot</span>
           </button>
         </div>
@@ -260,15 +260,15 @@ export default function Products({ onOpenAddProduct, onEditProduct, globalSearch
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-slate-50/80 border-b border-slate-200/80 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
-                  <th className="py-4 px-6 w-16">RASM</th>
-                  <th className="py-4 px-6">MAHSULOT NOMI</th>
-                  <th className="py-4 px-6">KATEGORIYA</th>
-                  <th className="py-4 px-6">BREND</th>
-                  <th className="py-4 px-6">SOTUV NARXI</th>
-                  <th className="py-4 px-6">ESKI NARX</th>
-                  <th className="py-4 px-6">CHEGIRMA</th>
-                  <th className="py-4 px-6">ZAXIRA</th>
-                  <th className="py-4 px-6 text-right">AMALLAR</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 w-14 whitespace-nowrap">RASM</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5">MAHSULOT NOMI</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">KATEGORIYA</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">BREND</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">SOTUV NARXI</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">ESKI NARX</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">CHEGIRMA</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">ZAXIRA</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 text-right whitespace-nowrap">AMALLAR</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 font-medium">
@@ -280,8 +280,8 @@ export default function Products({ onOpenAddProduct, onEditProduct, globalSearch
                   return (
                     <tr key={item._id} className="hover:bg-indigo-50/20 transition-colors">
                       {/* RASM */}
-                      <td className="py-3.5 px-6">
-                        <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-center overflow-hidden shrink-0">
+                      <td className="py-3 px-3.5 2xl:px-5">
+                        <div className="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-center overflow-hidden shrink-0">
                           {imgUrl ? (
                             <img
                               src={getImageUrl(imgUrl)}
@@ -306,39 +306,43 @@ export default function Products({ onOpenAddProduct, onEditProduct, globalSearch
                       </td>
 
                       {/* NOMI & SKU */}
-                      <td className="py-3.5 px-6">
-                        <div className="font-bold text-slate-900 text-sm leading-snug">{item.name}</div>
-                        <div className="text-[10px] font-semibold text-slate-400 mt-0.5">{skuCode}</div>
+                      <td className="py-3 px-3.5 2xl:px-5 min-w-[180px] max-w-[260px]">
+                        <div className="font-bold text-slate-900 text-xs 2xl:text-sm leading-snug line-clamp-2">
+                          {item.name}
+                        </div>
+                        <div className="text-[10px] font-semibold text-slate-400 mt-0.5 whitespace-nowrap">
+                          {skuCode}
+                        </div>
                       </td>
 
                       {/* KATEGORIYA */}
-                      <td className="py-3.5 px-6">
-                        <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold text-[11px]">
+                      <td className="py-3 px-3.5 2xl:px-5 whitespace-nowrap">
+                        <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold text-[11px] whitespace-nowrap">
                           {item.category || 'Phones'}
                         </span>
                       </td>
 
                       {/* BREND */}
-                      <td className="py-3.5 px-6">
-                        <span className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-indigo-50 text-indigo-700">
+                      <td className="py-3 px-3.5 2xl:px-5 whitespace-nowrap">
+                        <span className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-indigo-50 text-indigo-700 whitespace-nowrap">
                           {item.brand || 'Apple'}
                         </span>
                       </td>
 
                       {/* NARX */}
-                      <td className="py-3.5 px-6 font-black text-slate-900">
+                      <td className="py-3 px-3.5 2xl:px-5 font-black text-slate-900 whitespace-nowrap">
                         {formatMoney(item.price)}
                       </td>
 
                       {/* ESKI NARX */}
-                      <td className="py-3.5 px-6 text-slate-400 line-through">
+                      <td className="py-3 px-3.5 2xl:px-5 text-slate-400 line-through whitespace-nowrap">
                         {item.oldPrice ? formatMoney(item.oldPrice) : '-'}
                       </td>
 
                       {/* CHEGIRMA % */}
-                      <td className="py-3.5 px-6">
+                      <td className="py-3 px-3.5 2xl:px-5 whitespace-nowrap">
                         {item.discount ? (
-                          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-rose-50 text-rose-600 border border-rose-200">
+                          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-rose-50 text-rose-600 border border-rose-200 whitespace-nowrap">
                             -{item.discount}%
                           </span>
                         ) : (
@@ -347,16 +351,16 @@ export default function Products({ onOpenAddProduct, onEditProduct, globalSearch
                       </td>
 
                       {/* OMBOR */}
-                      <td className="py-3.5 px-6">
+                      <td className="py-3 px-3.5 2xl:px-5 whitespace-nowrap">
                         <span
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-bold text-[11px] ${
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-bold text-[11px] whitespace-nowrap ${
                             isLowStock
                               ? 'bg-amber-50 text-amber-700 border border-amber-200'
                               : 'bg-emerald-50 text-emerald-700'
                           }`}
                         >
                           <span
-                            className={`w-1.5 h-1.5 rounded-full ${
+                            className={`w-1.5 h-1.5 rounded-full shrink-0 ${
                               isLowStock ? 'bg-amber-500' : 'bg-emerald-500'
                             }`}
                           ></span>
@@ -365,8 +369,8 @@ export default function Products({ onOpenAddProduct, onEditProduct, globalSearch
                       </td>
 
                       {/* AMALLAR */}
-                      <td className="py-3.5 px-6 text-right">
-                        <div className="flex items-center justify-end gap-1.5">
+                      <td className="py-3 px-3.5 2xl:px-5 text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-1">
                           <button
                             onClick={() => onEditProduct(item)}
                             className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-colors cursor-pointer"

@@ -90,78 +90,80 @@ export default function Orders({ onSelectOrder, globalSearch = '' }) {
     .reduce((acc, o) => acc + Number(o.total || 0), 0);
 
   return (
-    <div className="p-6 lg:p-8 space-y-6 max-w-[1600px] mx-auto">
+    <div className="p-4 sm:p-5 2xl:p-7 space-y-5 max-w-[1600px] mx-auto">
       {/* Top 4 Order Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
-          <div>
-            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div className="bg-white p-4 2xl:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between gap-3 min-w-0">
+          <div className="min-w-0">
+            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">
               Jami Buyurtmalar
             </div>
-            <div className="text-2xl font-black text-slate-900 mt-1">
+            <div className="text-xl 2xl:text-2xl font-black text-slate-900 mt-1 whitespace-nowrap">
               {total} <span className="text-xs font-semibold text-slate-400">ta</span>
             </div>
-            <div className="text-[11px] font-semibold text-indigo-600 mt-0.5">
+            <div className="text-[11px] font-semibold text-indigo-600 mt-0.5 truncate">
               Barcha davrlar bo'yicha
             </div>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+          <div className="w-10 h-10 2xl:w-11 2xl:h-11 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
             <ShoppingCart className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
-          <div>
-            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+        <div className="bg-white p-4 2xl:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between gap-3 min-w-0">
+          <div className="min-w-0">
+            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">
               Yangi Kutilayotgan
             </div>
-            <div className="text-2xl font-black text-blue-600 mt-1">
+            <div className="text-xl 2xl:text-2xl font-black text-blue-600 mt-1 whitespace-nowrap">
               {newCount} <span className="text-xs font-semibold text-slate-400">ta</span>
             </div>
-            <div className="text-[11px] font-semibold text-blue-600 mt-0.5">
+            <div className="text-[11px] font-semibold text-blue-600 mt-0.5 truncate">
               Tasdiqlash kutilmoqda
             </div>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+          <div className="w-10 h-10 2xl:w-11 2xl:h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
             <Clock className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
-          <div>
-            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+        <div className="bg-white p-4 2xl:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between gap-3 min-w-0">
+          <div className="min-w-0">
+            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">
               Tasdiqlangan
             </div>
-            <div className="text-2xl font-black text-emerald-600 mt-1">
+            <div className="text-xl 2xl:text-2xl font-black text-emerald-600 mt-1 whitespace-nowrap">
               {confirmedCount} <span className="text-xs font-semibold text-slate-400">ta</span>
             </div>
-            <div className="text-[11px] font-semibold text-emerald-600 mt-0.5">
+            <div className="text-[11px] font-semibold text-emerald-600 mt-0.5 truncate">
               Muvaffaqiyatli yakunlangan
             </div>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+          <div className="w-10 h-10 2xl:w-11 2xl:h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
             <CheckCircle2 className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
-          <div>
-            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+        <div className="bg-white p-4 2xl:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between gap-3 min-w-0">
+          <div className="min-w-0">
+            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate">
               Sahifadagi Aylanma
             </div>
-            <div className="text-lg font-black text-slate-900 mt-1">{formatMoney(totalOrdersSum)}</div>
-            <div className="text-[11px] font-semibold text-rose-500 mt-0.5">
+            <div className="text-base 2xl:text-lg font-black text-slate-900 mt-1 whitespace-nowrap truncate">
+              {formatMoney(totalOrdersSum)}
+            </div>
+            <div className="text-[11px] font-semibold text-rose-500 mt-0.5 truncate">
               Bekor qilinganlar: {cancelledCount} ta
             </div>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
+          <div className="w-10 h-10 2xl:w-11 2xl:h-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
             <Wallet className="w-5 h-5" />
           </div>
         </div>
       </div>
 
       {/* Filter Tabs & Search Row */}
-      <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-white rounded-2xl p-3.5 2xl:p-4 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
         {/* Status Pills */}
         <div className="bg-slate-100 p-1 rounded-xl flex items-center gap-1 text-xs font-bold overflow-x-auto w-full md:w-auto">
           {[
@@ -197,7 +199,7 @@ export default function Orders({ onSelectOrder, globalSearch = '' }) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buyurtma #, mijoz ismi yoki telefon..."
-            className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white font-medium"
+            className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white font-medium"
           />
         </div>
       </div>
@@ -220,13 +222,13 @@ export default function Orders({ onSelectOrder, globalSearch = '' }) {
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-slate-50/80 border-b border-slate-200/80 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
-                  <th className="py-4 px-6">BUYURTMA RAQAMI</th>
-                  <th className="py-4 px-6">MIJOZ & ALOQA</th>
-                  <th className="py-4 px-6">MAHSULOTLAR</th>
-                  <th className="py-4 px-6">JAMI SUMMA</th>
-                  <th className="py-4 px-6">TO'LOV CHEKI</th>
-                  <th className="py-4 px-6">STATUS BOSHQARUVI</th>
-                  <th className="py-4 px-6 text-right">KO'RISH</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">BUYURTMA RAQAMI</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">MIJOZ & ALOQA</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5">MAHSULOTLAR</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">JAMI SUMMA</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">TO'LOV CHEKI</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">STATUS BOSHQARUVI</th>
+                  <th className="py-3.5 px-3.5 2xl:px-5 text-right whitespace-nowrap">KO'RISH</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 font-medium">
@@ -238,7 +240,7 @@ export default function Orders({ onSelectOrder, globalSearch = '' }) {
                   return (
                     <tr key={item._id} className="hover:bg-indigo-50/20 transition-colors">
                       {/* BUYURTMA RAQAMI */}
-                      <td className="py-4 px-6">
+                      <td className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">
                         <div className="font-black text-slate-900 text-xs">
                           {item.orderNumber || `XB-${(item._id || '').slice(-6)}`}
                         </div>
@@ -248,40 +250,40 @@ export default function Orders({ onSelectOrder, globalSearch = '' }) {
                       </td>
 
                       {/* MIJOZ */}
-                      <td className="py-4 px-6">
-                        <div className="font-bold text-slate-900">
+                      <td className="py-3.5 px-3.5 2xl:px-5">
+                        <div className="font-bold text-slate-900 truncate max-w-[160px]">
                           {item.customer?.name || item.user?.name || item.address?.title || 'Mijoz'}
                         </div>
-                        <div className="text-[11px] text-slate-500 font-semibold">
+                        <div className="text-[11px] text-slate-500 font-semibold whitespace-nowrap">
                           {item.customer?.phone || item.user?.phone || item.address?.phone || '-'}
                         </div>
                       </td>
 
                       {/* MAHSULOTLAR */}
-                      <td className="py-4 px-6">
-                        <div className="text-slate-800 font-bold truncate max-w-[220px]">
+                      <td className="py-3.5 px-3.5 2xl:px-5 min-w-[160px] max-w-[240px]">
+                        <div className="text-slate-800 font-bold truncate">
                           {firstProdName}
                         </div>
                         {itemCount > 1 && (
-                          <div className="text-[10px] text-indigo-600 font-semibold">
+                          <div className="text-[10px] text-indigo-600 font-semibold whitespace-nowrap">
                             +{itemCount - 1} ta boshqa mahsulot
                           </div>
                         )}
                       </td>
 
                       {/* JAMI SUMMA */}
-                      <td className="py-4 px-6 font-black text-slate-900 text-xs">
+                      <td className="py-3.5 px-3.5 2xl:px-5 font-black text-slate-900 text-xs whitespace-nowrap">
                         {formatMoney(item.total)}
                       </td>
 
                       {/* CHEK */}
-                      <td className="py-4 px-6">
+                      <td className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">
                         {item.receipt || item.receiptData ? (
                           <button
                             onClick={() => onSelectOrder(item)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-[11px] transition-colors cursor-pointer"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-[11px] transition-colors cursor-pointer whitespace-nowrap"
                           >
-                            <FileText className="w-3.5 h-3.5" />
+                            <FileText className="w-3.5 h-3.5 shrink-0" />
                             <span>Chekni ko'rish</span>
                           </button>
                         ) : (
@@ -290,12 +292,12 @@ export default function Orders({ onSelectOrder, globalSearch = '' }) {
                       </td>
 
                       {/* STATUS SELECTOR */}
-                      <td className="py-4 px-6">
+                      <td className="py-3.5 px-3.5 2xl:px-5 whitespace-nowrap">
                         <select
                           value={item.status || 'new'}
                           disabled={updatingId === item._id}
                           onChange={(e) => handleStatusChange(item._id, e.target.value)}
-                          className={`px-3 py-1.5 rounded-xl border text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer ${
+                          className={`px-2.5 py-1.5 rounded-xl border text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer whitespace-nowrap ${
                             item.status === 'confirmed' || item.status === 'Tasdiqlangan'
                               ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                               : item.status === 'cancelled' || item.status === 'Bekor qilingan'
@@ -310,7 +312,7 @@ export default function Orders({ onSelectOrder, globalSearch = '' }) {
                       </td>
 
                       {/* AMALLAR */}
-                      <td className="py-4 px-6 text-right">
+                      <td className="py-3.5 px-3.5 2xl:px-5 text-right whitespace-nowrap">
                         <button
                           onClick={() => onSelectOrder(item)}
                           className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-colors cursor-pointer"

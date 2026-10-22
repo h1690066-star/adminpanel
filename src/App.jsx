@@ -52,6 +52,7 @@ function AdminContent() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [globalSearch, setGlobalSearch] = useState('');
   const [refreshKey, setRefreshKey] = useState(0);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
@@ -118,13 +119,18 @@ function AdminContent() {
       {/* Sidebar */}
       <Sidebar
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={(tab) => {
+          setActiveTab(tab);
+          setIsMobileSidebarOpen(false);
+        }}
         onOpenAddProduct={handleOpenAddProduct}
         counts={navCounts}
+        isOpen={isMobileSidebarOpen}
+        onClose={() => setIsMobileSidebarOpen(false)}
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
         {/* Topbar */}
         <Topbar
           title={tabTitles[activeTab] || 'Boshqaruv paneli'}
@@ -133,6 +139,7 @@ function AdminContent() {
           setSearch={setGlobalSearch}
           onRefresh={triggerRefresh}
           onOpenAddProduct={handleOpenAddProduct}
+          onOpenSidebar={() => setIsMobileSidebarOpen(true)}
         />
 
         {/* Tab Views */}

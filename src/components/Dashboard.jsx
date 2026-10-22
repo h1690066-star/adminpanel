@@ -360,40 +360,41 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
   const topProducts = analytics?.topProducts || [];
 
   return (
-    <div className="p-6 lg:p-8 space-y-7 max-w-[1600px] mx-auto">
+    <div className="p-4 sm:p-5 2xl:p-7 space-y-5 2xl:space-y-6 max-w-[1600px] mx-auto">
       {/* ==================== 1. PRIMARY EXECUTIVE KPI CARDS (4 FULL-DETAIL CARDS) ==================== */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 2xl:gap-5">
         {/* KPI 1: SAVDO TUSHUMI */}
-        <div className="bg-gradient-to-br from-[#0b1120] via-[#111827] to-[#1e1b4b] text-white p-6 rounded-3xl shadow-xl shadow-indigo-950/15 border border-white/10 relative overflow-hidden flex flex-col justify-between">
+        <div className="bg-gradient-to-br from-[#0b1120] via-[#111827] to-[#1e1b4b] text-white p-4 2xl:p-5 rounded-3xl shadow-xl shadow-indigo-950/15 border border-white/10 relative overflow-hidden flex flex-col justify-between min-w-0">
           <div className="pointer-events-none absolute -right-10 -top-10 w-36 h-36 rounded-full bg-emerald-500/20 blur-2xl" />
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-0.5 rounded-full">
-                <TrendingUp className="w-3 h-3" />
-                Umumiy Savdo Aylanmasi
+          <div>
+            <div className="flex items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-1 text-[9px] 2xl:text-[10px] font-extrabold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-1 rounded-full truncate">
+                <TrendingUp className="w-3 h-3 shrink-0" />
+                <span className="truncate">Umumiy Savdo Aylanmasi</span>
               </span>
-              <div className="text-2xl sm:text-[26px] font-black tracking-tight text-white mt-2.5 leading-none">
-                {formatMoney(summary.totalSales)}
+              <div className="w-9 h-9 2xl:w-10 2xl:h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0">
+                <Banknote className="w-4 h-4 2xl:w-5 2xl:h-5" />
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">
-                {summary.activeOrdersCount} ta faol buyurtma ({summary.totalItemsSold} dona tovar)
-              </p>
             </div>
-            <div className="w-11 h-11 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0">
-              <Banknote className="w-5 h-5" />
+
+            <div className="text-xl 2xl:text-2xl font-black tracking-tight text-white mt-3 leading-tight whitespace-nowrap truncate">
+              {formatMoney(summary.totalSales)}
             </div>
+            <p className="text-[11px] text-slate-400 mt-1 truncate">
+              {summary.activeOrdersCount} ta faol buyurtma ({summary.totalItemsSold} dona tovar)
+            </p>
           </div>
 
-          <div className="mt-5 pt-3.5 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px]">
-            <div className="bg-white/[0.04] rounded-xl p-2 border border-white/[0.06]">
-              <div className="text-slate-400 text-[10px]">Tasdiqlangan tushum</div>
-              <div className="font-extrabold text-emerald-400 truncate">
+          <div className="mt-4 pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px]">
+            <div className="bg-white/[0.04] rounded-xl p-2 border border-white/[0.06] min-w-0">
+              <div className="text-slate-400 text-[10px] truncate">Tasdiqlangan</div>
+              <div className="font-extrabold text-emerald-400 text-xs whitespace-nowrap truncate mt-0.5">
                 {formatShortMoney(summary.confirmedSales)} so'm
               </div>
             </div>
-            <div className="bg-white/[0.04] rounded-xl p-2 border border-white/[0.06]">
-              <div className="text-slate-400 text-[10px]">Kutilayotgan (Yangi)</div>
-              <div className="font-extrabold text-sky-400 truncate">
+            <div className="bg-white/[0.04] rounded-xl p-2 border border-white/[0.06] min-w-0">
+              <div className="text-slate-400 text-[10px] truncate">Kutilayotgan</div>
+              <div className="font-extrabold text-sky-400 text-xs whitespace-nowrap truncate mt-0.5">
                 {formatShortMoney(summary.pendingSales)} so'm
               </div>
             </div>
@@ -401,142 +402,145 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
         </div>
 
         {/* KPI 2: BUYURTMALAR ANALITIKASI */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-indigo-600 bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">
-                <ShoppingCart className="w-3 h-3" />
-                Buyurtmalar Statistikasi
+        <div className="bg-white p-4 2xl:p-5 rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex flex-col justify-between min-w-0">
+          <div>
+            <div className="flex items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-1 text-[9px] 2xl:text-[10px] font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-200 px-2.5 py-1 rounded-full truncate">
+                <ShoppingCart className="w-3 h-3 shrink-0" />
+                <span className="truncate">Buyurtmalar Statistikasi</span>
               </span>
-              <div className="flex items-baseline gap-2 mt-2.5">
-                <span className="text-3xl font-black text-slate-900">
-                  {summary.totalOrders}
-                </span>
-                <span className="text-xs font-bold text-slate-500">ta jami buyurtma</span>
+              <div className="w-9 h-9 2xl:w-10 2xl:h-10 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center shrink-0">
+                <ShoppingCart className="w-4 h-4 2xl:w-5 2xl:h-5" />
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">
-                Muvaffaqiyatli konversiya: <strong className="text-emerald-600">{summary.conversionRate}%</strong>
-              </p>
             </div>
-            <div className="w-11 h-11 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center shrink-0">
-              <ShoppingCart className="w-5 h-5" />
+
+            <div className="flex items-baseline gap-1.5 mt-3 whitespace-nowrap">
+              <span className="text-2xl 2xl:text-3xl font-black text-slate-900 leading-none">
+                {summary.totalOrders}
+              </span>
+              <span className="text-xs font-bold text-slate-500">ta jami buyurtma</span>
             </div>
+            <p className="text-[11px] text-slate-400 mt-1.5 truncate">
+              Muvaffaqiyatli konversiya: <strong className="text-emerald-600">{summary.conversionRate}%</strong>
+            </p>
           </div>
 
-          <div className="mt-5 pt-3.5 border-t border-slate-100 grid grid-cols-3 gap-2 text-center text-[11px]">
-            <div className="bg-blue-50/70 border border-blue-100 rounded-xl py-1.5 px-1">
-              <div className="text-[10px] text-blue-600 font-semibold">Yangi</div>
-              <div className="font-black text-blue-700 text-sm">{summary.newOrders} ta</div>
+          <div className="mt-4 pt-3 border-t border-slate-100 grid grid-cols-3 gap-1.5 text-center text-[11px]">
+            <div className="bg-blue-50/70 border border-blue-100 rounded-xl py-1.5 px-1 min-w-0">
+              <div className="text-[10px] text-blue-600 font-semibold truncate">Yangi</div>
+              <div className="font-black text-blue-700 text-xs 2xl:text-sm whitespace-nowrap">{summary.newOrders} ta</div>
             </div>
-            <div className="bg-emerald-50/70 border border-emerald-100 rounded-xl py-1.5 px-1">
-              <div className="text-[10px] text-emerald-600 font-semibold">Tasdiqlandi</div>
-              <div className="font-black text-emerald-700 text-sm">{summary.confirmedOrders} ta</div>
+            <div className="bg-emerald-50/70 border border-emerald-100 rounded-xl py-1.5 px-1 min-w-0">
+              <div className="text-[10px] text-emerald-600 font-semibold truncate">Tasdiq.</div>
+              <div className="font-black text-emerald-700 text-xs 2xl:text-sm whitespace-nowrap">{summary.confirmedOrders} ta</div>
             </div>
-            <div className="bg-rose-50/70 border border-rose-100 rounded-xl py-1.5 px-1">
-              <div className="text-[10px] text-rose-600 font-semibold">Bekor</div>
-              <div className="font-black text-rose-700 text-sm">{summary.cancelledOrders} ta</div>
+            <div className="bg-rose-50/70 border border-rose-100 rounded-xl py-1.5 px-1 min-w-0">
+              <div className="text-[10px] text-rose-600 font-semibold truncate">Bekor</div>
+              <div className="font-black text-rose-700 text-xs 2xl:text-sm whitespace-nowrap">{summary.cancelledOrders} ta</div>
             </div>
           </div>
         </div>
 
         {/* KPI 3: MAHSULOTLAR VA OMBOR QIYMATI */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full">
-                <Package className="w-3 h-3" />
-                Katalog va Ombor Fondi
+        <div className="bg-white p-4 2xl:p-5 rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex flex-col justify-between min-w-0">
+          <div>
+            <div className="flex items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-1 text-[9px] 2xl:text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full truncate">
+                <Package className="w-3 h-3 shrink-0" />
+                <span className="truncate">Katalog va Ombor Fondi</span>
               </span>
-              <div className="flex items-baseline gap-2 mt-2.5">
-                <span className="text-3xl font-black text-slate-900">
-                  {summary.totalProducts}
-                </span>
-                <span className="text-xs font-bold text-slate-500">
-                  tur ({summary.totalStockUnits} dona zaxira)
-                </span>
+              <div className="w-9 h-9 2xl:w-10 2xl:h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center shrink-0">
+                <Package className="w-4 h-4 2xl:w-5 2xl:h-5" />
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">
-                Ombor qiymati: <strong className="text-slate-800">{formatShortMoney(summary.totalInventoryValue)} so'm</strong>
-              </p>
             </div>
-            <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center shrink-0">
-              <Package className="w-5 h-5" />
+
+            <div className="flex items-baseline gap-1.5 mt-3 whitespace-nowrap">
+              <span className="text-2xl 2xl:text-3xl font-black text-slate-900 leading-none">
+                {summary.totalProducts}
+              </span>
+              <span className="text-xs font-bold text-slate-500 truncate">
+                tur ({summary.totalStockUnits} dona zaxira)
+              </span>
             </div>
+            <p className="text-[11px] text-slate-400 mt-1.5 truncate">
+              Ombor qiymati: <strong className="text-slate-800">{formatShortMoney(summary.totalInventoryValue)} so'm</strong>
+            </p>
           </div>
 
-          <div className="mt-5 pt-3.5 border-t border-slate-100 grid grid-cols-3 gap-2 text-center text-[11px]">
-            <div className="bg-slate-50 border border-slate-200/70 rounded-xl py-1.5 px-1">
-              <div className="text-[10px] text-slate-500 font-semibold">Faol</div>
-              <div className="font-black text-slate-800 text-sm">{summary.activeProducts} ta</div>
+          <div className="mt-4 pt-3 border-t border-slate-100 grid grid-cols-3 gap-1.5 text-center text-[11px]">
+            <div className="bg-slate-50 border border-slate-200/70 rounded-xl py-1.5 px-1 min-w-0">
+              <div className="text-[10px] text-slate-500 font-semibold truncate">Faol</div>
+              <div className="font-black text-slate-800 text-xs 2xl:text-sm whitespace-nowrap">{summary.activeProducts} ta</div>
             </div>
-            <div className="bg-rose-50/70 border border-rose-100 rounded-xl py-1.5 px-1">
-              <div className="text-[10px] text-rose-600 font-semibold">Kam qolgan</div>
-              <div className="font-black text-rose-700 text-sm">{summary.lowStockCount} ta</div>
+            <div className="bg-rose-50/70 border border-rose-100 rounded-xl py-1.5 px-1 min-w-0">
+              <div className="text-[10px] text-rose-600 font-semibold truncate">Kam qoldi</div>
+              <div className="font-black text-rose-700 text-xs 2xl:text-sm whitespace-nowrap">{summary.lowStockCount} ta</div>
             </div>
-            <div className="bg-purple-50/70 border border-purple-100 rounded-xl py-1.5 px-1">
-              <div className="text-[10px] text-purple-600 font-semibold">Aksiyada</div>
-              <div className="font-black text-purple-700 text-sm">{summary.discountedProductsCount} ta</div>
+            <div className="bg-purple-50/70 border border-purple-100 rounded-xl py-1.5 px-1 min-w-0">
+              <div className="text-[10px] text-purple-600 font-semibold truncate">Aksiyada</div>
+              <div className="font-black text-purple-700 text-xs 2xl:text-sm whitespace-nowrap">{summary.discountedProductsCount} ta</div>
             </div>
           </div>
         </div>
 
         {/* KPI 4: MIJOZLAR BAZASI */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-0.5 rounded-full">
-                <Users className="w-3 h-3" />
-                Mijozlar Analitikasi
+        <div className="bg-white p-4 2xl:p-5 rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex flex-col justify-between min-w-0">
+          <div>
+            <div className="flex items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-1 text-[9px] 2xl:text-[10px] font-extrabold uppercase tracking-wider text-sky-700 bg-sky-50 border border-sky-200 px-2.5 py-1 rounded-full truncate">
+                <Users className="w-3 h-3 shrink-0" />
+                <span className="truncate">Mijozlar Analitikasi</span>
               </span>
-              <div className="flex items-baseline gap-2 mt-2.5">
-                <span className="text-3xl font-black text-slate-900">
-                  {summary.totalCustomers}
-                </span>
-                <span className="text-xs font-bold text-slate-500">ta ro'yxatdan o'tgan</span>
+              <div className="w-9 h-9 2xl:w-10 2xl:h-10 rounded-xl bg-sky-50 text-sky-600 border border-sky-100 flex items-center justify-center shrink-0">
+                <Users className="w-4 h-4 2xl:w-5 2xl:h-5" />
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">
-                O'rtacha xarid cheki: <strong className="text-indigo-600">{formatShortMoney(summary.avgOrderValue)} so'm</strong>
-              </p>
             </div>
-            <div className="w-11 h-11 rounded-2xl bg-sky-50 text-sky-600 border border-sky-100 flex items-center justify-center shrink-0">
-              <Users className="w-5 h-5" />
+
+            <div className="flex items-baseline gap-1.5 mt-3 whitespace-nowrap">
+              <span className="text-2xl 2xl:text-3xl font-black text-slate-900 leading-none">
+                {summary.totalCustomers}
+              </span>
+              <span className="text-xs font-bold text-slate-500 truncate">ta ro'yxatdan o'tgan</span>
             </div>
+            <p className="text-[11px] text-slate-400 mt-1.5 truncate">
+              O'rtacha xarid cheki: <strong className="text-indigo-600">{formatShortMoney(summary.avgOrderValue)} so'm</strong>
+            </p>
           </div>
 
-          <div className="mt-5 pt-3.5 border-t border-slate-100 grid grid-cols-3 gap-2 text-center text-[11px]">
-            <div className="bg-sky-50/70 border border-sky-100 rounded-xl py-1.5 px-1">
-              <div className="text-[10px] text-sky-600 font-semibold">Xaridorlar</div>
-              <div className="font-black text-sky-700 text-sm">{summary.activeBuyers} ta</div>
+          <div className="mt-4 pt-3 border-t border-slate-100 grid grid-cols-3 gap-1.5 text-center text-[11px]">
+            <div className="bg-sky-50/70 border border-sky-100 rounded-xl py-1.5 px-1 min-w-0">
+              <div className="text-[10px] text-sky-600 font-semibold truncate">Xaridor</div>
+              <div className="font-black text-sky-700 text-xs 2xl:text-sm whitespace-nowrap">{summary.activeBuyers} ta</div>
             </div>
-            <div className="bg-amber-50/70 border border-amber-100 rounded-xl py-1.5 px-1">
-              <div className="text-[10px] text-amber-600 font-semibold">VIP Mijoz</div>
-              <div className="font-black text-amber-700 text-sm">{summary.vipCustomers} ta</div>
+            <div className="bg-amber-50/70 border border-amber-100 rounded-xl py-1.5 px-1 min-w-0">
+              <div className="text-[10px] text-amber-600 font-semibold truncate">VIP Mijoz</div>
+              <div className="font-black text-amber-700 text-xs 2xl:text-sm whitespace-nowrap">{summary.vipCustomers} ta</div>
             </div>
-            <div className="bg-emerald-50/70 border border-emerald-100 rounded-xl py-1.5 px-1">
-              <div className="text-[10px] text-emerald-600 font-semibold">Bu oyda</div>
-              <div className="font-black text-emerald-700 text-sm">+{summary.newCustomersThisMonth}</div>
+            <div className="bg-emerald-50/70 border border-emerald-100 rounded-xl py-1.5 px-1 min-w-0">
+              <div className="text-[10px] text-emerald-600 font-semibold truncate">Bu oyda</div>
+              <div className="font-black text-emerald-700 text-xs 2xl:text-sm whitespace-nowrap">+{summary.newCustomersThisMonth}</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* ==================== 2. SECONDARY DETAILED INSIGHTS STRIP (6 MINI CARDS) ==================== */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
-        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs">
+      <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-6 gap-3.5">
+        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs min-w-0">
           <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
             <CreditCard className="w-4 h-4" />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="text-[10px] font-bold text-slate-400 uppercase truncate">O'rtacha Chek</div>
             <div className="text-xs font-black text-slate-900 truncate">{formatShortMoney(summary.avgOrderValue)} so'm</div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs">
+        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs min-w-0">
           <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
             <FileText className="w-4 h-4" />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="text-[10px] font-bold text-slate-400 uppercase truncate">Chekli Buyurtma</div>
             <div className="text-xs font-black text-slate-900 truncate">
               {summary.ordersWithReceipt} ta ({Math.round((summary.ordersWithReceipt / Math.max(1, summary.totalOrders)) * 100)}%)
@@ -544,21 +548,21 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs">
+        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs min-w-0">
           <div className="w-9 h-9 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center shrink-0">
             <Box className="w-4 h-4" />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="text-[10px] font-bold text-slate-400 uppercase truncate">Sotilgan Tovar</div>
             <div className="text-xs font-black text-slate-900 truncate">{summary.totalItemsSold} dona</div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs">
+        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs min-w-0">
           <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
             <Award className="w-4 h-4" />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="text-[10px] font-bold text-slate-400 uppercase truncate">Top Brend</div>
             <div className="text-xs font-black text-slate-900 truncate">
               {analytics?.brandStats?.[0]?.brand || 'Apple'} ({analytics?.brandStats?.[0]?.productsCount || 15} tur)
@@ -566,21 +570,21 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs">
+        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs min-w-0">
           <div className="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
             <Percent className="w-4 h-4" />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="text-[10px] font-bold text-slate-400 uppercase truncate">Chegirmali</div>
             <div className="text-xs font-black text-slate-900 truncate">{summary.discountedProductsCount} ta mahsulot</div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs">
+        <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 flex items-center gap-3 shadow-2xs min-w-0">
           <div className="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
             <AlertTriangle className="w-4 h-4" />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="text-[10px] font-bold text-slate-400 uppercase truncate">Ombor Xavfi</div>
             <div className="text-xs font-black text-rose-600 truncate">
               {summary.lowStockCount} ta kam ({summary.outOfStockCount} tugagan)
@@ -590,33 +594,33 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
       </div>
 
       {/* ==================== 3. 3-TYPE VISUAL ANALYTICS & CHARTS STUDIO ==================== */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-5 sm:p-6 space-y-6">
+      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs p-4 sm:p-5 2xl:p-6 space-y-5">
         {/* Studio Control Header */}
-        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 pb-5 border-b border-slate-100">
-          <div className="flex items-start sm:items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-600 to-emerald-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/20 shrink-0">
-              <Activity className="w-6 h-6" />
+        <div className="flex flex-col 2xl:flex-row 2xl:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <div className="flex items-start sm:items-center gap-3 min-w-0">
+            <div className="w-10 h-10 2xl:w-11 2xl:h-11 rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-600 to-emerald-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/20 shrink-0">
+              <Activity className="w-5 h-5" />
             </div>
-            <div>
+            <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
-                <h2 className="text-lg font-black text-slate-900">
+                <h2 className="text-base 2xl:text-lg font-black text-slate-900">
                   Visual Statistika Markazi (3 Xil Grafik Tahlili)
                 </h2>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200 whitespace-nowrap">
                   100% Real Baza Ma'lumotlari
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
-                1) To'lqinli dinamika grafigi • 2) Ustunli taqqoslash grafigi • 3) Halqali taqsimot grafigi — barchasida aniq ko'rsatkichlar bilan
+                1) To'lqinli dinamika grafigi • 2) Ustunli taqqoslash grafigi • 3) Halqali taqsimot grafigi
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2 shrink-0">
             {/* 3 Chart Mode Selector */}
-            <div className="bg-slate-100 p-1 rounded-2xl flex flex-wrap items-center gap-1 text-xs font-bold">
+            <div className="bg-slate-100 p-1 rounded-2xl flex flex-wrap items-center gap-1 text-[11px] font-bold">
               {[
-                { id: 'all', label: '✨ Barchasi (3 xil grafik)', icon: Layers },
+                { id: 'all', label: '✨ Barchasi (3 grafik)', icon: Layers },
                 { id: 'spline', label: '1. To\'lqinli Dinamika', icon: TrendingUp },
                 { id: 'bar', label: '2. Ustunli Grafik', icon: BarChart3 },
                 { id: 'donut', label: '3. Halqali Taqsimot', icon: PieChart },
@@ -628,13 +632,13 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
                     key={m.id}
                     type="button"
                     onClick={() => setChartViewMode(m.id)}
-                    className={`px-3 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer ${
+                    className={`px-2.5 py-1.5 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
                       active
                         ? 'bg-slate-900 text-white shadow-sm'
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    <Icon className="w-3.5 h-3.5" />
+                    <Icon className="w-3.5 h-3.5 shrink-0" />
                     <span>{m.label}</span>
                   </button>
                 );
@@ -642,7 +646,7 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
             </div>
 
             {/* Period Selector */}
-            <div className="bg-slate-100 p-1 rounded-2xl flex items-center text-xs font-bold">
+            <div className="bg-slate-100 p-1 rounded-2xl flex items-center text-[11px] font-bold shrink-0">
               {[
                 { id: '7kun', label: '7 kun' },
                 { id: '30kun', label: '30 kun' },
@@ -652,7 +656,7 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
                   key={p.id}
                   type="button"
                   onClick={() => setChartPeriod(p.id)}
-                  className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
+                  className={`px-2.5 py-1.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${
                     chartPeriod === p.id
                       ? 'bg-white text-indigo-600 font-extrabold shadow-xs'
                       : 'text-slate-500 hover:text-slate-900'
@@ -974,27 +978,27 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
             </div>
 
             {/* 1-Grafik Batafsil Ma'lumotlar Jadvali (All Data Stated Clearly) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 pt-1">
+            <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-7 gap-2 pt-1">
               {splineCoords.map((item, idx) => (
                 <div
                   key={idx}
                   onMouseEnter={() => setHoveredSplineIdx(idx)}
-                  className={`p-3 rounded-2xl border transition cursor-pointer ${
+                  className={`p-2.5 2xl:p-3 rounded-2xl border transition cursor-pointer min-w-0 ${
                     hoveredSplineIdx === idx
                       ? 'bg-emerald-50/70 border-emerald-400 shadow-xs'
                       : 'bg-white border-slate-200/80 hover:border-slate-300'
                   }`}
                 >
-                  <div className="flex items-center justify-between text-[11px] font-black text-slate-900">
-                    <span>{item.label}</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">
+                  <div className="flex items-center justify-between gap-1 text-[11px] font-black text-slate-900">
+                    <span className="truncate">{item.label}</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 shrink-0">
                       {item.share}%
                     </span>
                   </div>
                   <div className="text-xs font-black text-emerald-600 mt-1 truncate">
                     {formatShortMoney(item.sales)} so'm
                   </div>
-                  <div className="flex items-center justify-between text-[10px] text-slate-500 font-semibold mt-1 pt-1 border-t border-slate-100">
+                  <div className="flex items-center justify-between gap-1 text-[10px] text-slate-500 font-semibold mt-1 pt-1 border-t border-slate-100 whitespace-nowrap">
                     <span>{item.orders} buyurtma</span>
                     <span>{item.customers} mijoz</span>
                   </div>
@@ -1215,8 +1219,8 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
                 </div>
 
                 {/* SVG Multi-Segment Donut Chart */}
-                <div className="bg-white rounded-2xl border border-slate-200/80 p-4 flex flex-col sm:flex-row items-center justify-around gap-4">
-                  <div className="relative w-48 h-48 flex items-center justify-center shrink-0">
+                <div className="bg-white rounded-2xl border border-slate-200/80 p-3.5 2xl:p-4 flex flex-col sm:flex-row items-center justify-around gap-3.5">
+                  <div className="relative w-40 h-40 2xl:w-48 2xl:h-48 flex items-center justify-center shrink-0">
                     <svg className="w-full h-full -rotate-90" viewBox="0 0 180 180">
                       <circle
                         cx="90"
@@ -1398,11 +1402,11 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
                   <tr className="border-b border-slate-100 text-slate-400 font-extrabold uppercase tracking-wider text-[10px]">
-                    <th className="pb-3 pr-3">BUYURTMA #</th>
-                    <th className="pb-3 pr-3">MIJOZ VA TELEFON</th>
-                    <th className="pb-3 pr-3">SUMMA</th>
-                    <th className="pb-3 pr-3">CHEK</th>
-                    <th className="pb-3 text-right">HOLAT</th>
+                    <th className="pb-3 pr-3 whitespace-nowrap">BUYURTMA #</th>
+                    <th className="pb-3 pr-3 whitespace-nowrap">MIJOZ VA TELEFON</th>
+                    <th className="pb-3 pr-3 whitespace-nowrap">SUMMA</th>
+                    <th className="pb-3 pr-3 whitespace-nowrap">CHEK</th>
+                    <th className="pb-3 text-right whitespace-nowrap">HOLAT</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 font-medium">
@@ -1412,7 +1416,7 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
                       onClick={() => onSelectOrder && onSelectOrder(item)}
                       className="hover:bg-slate-50/90 transition-colors cursor-pointer group"
                     >
-                      <td className="py-3.5 pr-3">
+                      <td className="py-3 pr-3 whitespace-nowrap">
                         <div className="font-black text-slate-900 group-hover:text-indigo-600 transition-colors">
                           {item.orderNumber || `XB-${String(item._id).slice(-5)}`}
                         </div>
@@ -1422,23 +1426,23 @@ export default function Dashboard({ setActiveTab, onSelectOrder, onOpenAddProduc
                             : 'Bugun'}
                         </div>
                       </td>
-                      <td className="py-3.5 pr-3">
-                        <div className="font-bold text-slate-800">{item.userName}</div>
-                        <div className="text-[10px] text-slate-400">{item.userPhone}</div>
+                      <td className="py-3 pr-3">
+                        <div className="font-bold text-slate-800 truncate max-w-[160px]">{item.userName}</div>
+                        <div className="text-[10px] text-slate-400 whitespace-nowrap">{item.userPhone}</div>
                       </td>
-                      <td className="py-3.5 pr-3 font-black text-slate-900">
+                      <td className="py-3 pr-3 font-black text-slate-900 whitespace-nowrap">
                         {formatMoney(item.total)}
                       </td>
-                      <td className="py-3.5 pr-3">
+                      <td className="py-3 pr-3 whitespace-nowrap">
                         {item.hasReceipt || item.receipt ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[10px] font-bold border border-indigo-200">
-                            <Eye className="w-3 h-3" /> Chek bor
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[10px] font-bold border border-indigo-200 whitespace-nowrap">
+                            <Eye className="w-3 h-3 shrink-0" /> Chek bor
                           </span>
                         ) : (
                           <span className="text-slate-300 text-[10px]">—</span>
                         )}
                       </td>
-                      <td className="py-3.5 text-right">{getStatusBadge(item.status)}</td>
+                      <td className="py-3 text-right whitespace-nowrap">{getStatusBadge(item.status)}</td>
                     </tr>
                   ))}
                 </tbody>
