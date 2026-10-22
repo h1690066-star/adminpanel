@@ -17,8 +17,8 @@ import {
 
 export default function Login() {
   const { login } = useAuth();
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('adminxon77');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState(null);
@@ -101,7 +101,7 @@ export default function Login() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="admin"
+                placeholder="Loginni kiriting"
                 required
                 className="w-full pl-10 pr-4 py-3 bg-slate-950/80 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-medium"
               />
@@ -120,7 +120,7 @@ export default function Login() {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="Parolni kiriting"
                 required
                 className="w-full pl-10 pr-10 py-3 bg-slate-950/80 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-medium"
               />
@@ -135,7 +135,7 @@ export default function Login() {
           </div>
 
           <div className="flex items-center justify-between text-xs pt-1">
-            <label className="flex items-center gap-2 text-slate-400 cursor-pointer font-medium">
+            <label className="flex items-center gap-2 text-slate-400 cursor-pointer font-medium select-none">
               <input
                 type="checkbox"
                 checked={rememberMe}
@@ -144,7 +144,6 @@ export default function Login() {
               />
               Sessiyani eslab qolish
             </label>
-            <span className="text-indigo-400 font-semibold">Default: admin / adminxon77</span>
           </div>
 
           <button

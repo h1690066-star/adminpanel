@@ -10,22 +10,6 @@ export function AuthProvider({ children }) {
     return saved ? JSON.parse(saved) : null;
   });
 
-  useEffect(() => {
-    async function autoAuth() {
-      if (!token) {
-        try {
-          const res = await loginAdmin('admin', 'adminxon77');
-          setToken(res.token);
-          setUser(res.admin);
-        } catch (e) {
-          console.warn('Initial auto-auth failed:', e);
-          setUser(null);
-        }
-      }
-    }
-    autoAuth();
-  }, [token]);
-
   const handleLogin = async (username, password) => {
     const res = await loginAdmin(username, password);
     setToken(res.token);
